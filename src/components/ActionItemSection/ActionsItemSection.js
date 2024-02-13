@@ -57,6 +57,8 @@ export function ActionItemSection () {
             sortByDate(ACTION_DATA)
         } 
     }
+    
+    const[samplesearch,setsamplesearch] = useState("");
 
     return(
         <div id='action-centre'>
@@ -70,13 +72,17 @@ export function ActionItemSection () {
             </div>
             <div id='searchbar'>
                 <img src = {search} alt='Search' height={15} width={15}></img>
-                <input name='search' type='text' placeholder="Search action items"></input>
+                <input name='search' type='text' placeholder="Search action items" onChange={(event) => setsamplesearch(event.target.value)}></input>
             </div>
             {/* for i 1 to 10{
                 collapsible(title,amount,description,startdate)
             } */}
             <ul id='list'>    
-                {sampleData.map((action)=>{
+                {sampleData.filter((action) => { 
+                    return samplesearch.toLowerCase() === '' ? 
+                        action: 
+                        action.title.toLowerCase().includes(samplesearch)
+                }).map((action)=>{
                     return(
                     <ActionItem key={action.title}
                     id={action.id}
