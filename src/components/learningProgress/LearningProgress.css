@@ -1,0 +1,12 @@
+#heading h1 {
+    font-size: large;
+}
+#headinglearningprogress{
+    background-color: white;
+    padding: 10px;
+    width: 25vw;
+    margin: 15px;
+    border-radius: 10px;
+    height: 16vw;
+    font-size: 9px;
+}
