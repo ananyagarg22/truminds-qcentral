@@ -1,13 +1,14 @@
+*{
+  font-family: 'Poppins', sans-serif;
+}
 body {
   padding: 0;
   margin: 0;
   background-color: rgb(233,236,244);  
 }
 .App {
-  
-  text-align: center;
+  display: flex;
   height: 100vh;
-}
-#action-header h5 {
-  text-align: left;
+  flex-direction: column;
+  flex-wrap: wrap;
 }

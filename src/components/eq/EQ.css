@@ -1,0 +1,47 @@
+#EQ{
+    background-color: white;
+    padding: 10px;
+    width: 25vw;
+    margin: 15px;
+    border-radius: 10px;
+    height: 39vw;
+    margin-top: 2px;
+    
+}
+#button{
+    background: none;
+    border: none;
+    outline: none;
+    box-shadow: none;
+    color: gray;
+    padding: 10px;
+    font-size: 15px;
+    border-bottom: 2px solid rgb(241,242,244);
+    width: 50%;
+}
+#active-button{
+    background: none;
+    border: none;
+    outline: none;
+    box-shadow: none;
+    color: rgb(0,98,214);
+    font-weight: bold;
+    padding: 10px;
+    font-size: 15px;
+    border-bottom: 2px solid rgb(0,98,214);
+    width: 50%;
+}
+#allbuttons{
+    display: flex;
+    justify-content: space-around;
+    align-items: first baseline;
+}
+#metric {
+    padding: 10px;
+    padding-left: 15px;
+    padding-right: 15px;
+    border-bottom: 1px solid rgb(241,242,244);
+}
+#metric * {
+    font-size: 15px;
+}
