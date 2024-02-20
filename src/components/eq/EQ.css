@@ -4,7 +4,7 @@
     width: 25vw;
     margin: 15px;
     border-radius: 10px;
-    height: 39vw;
+    height: 70vh;
     margin-top: 2px;
     
 }
@@ -44,4 +44,8 @@
 }
 #metric * {
     font-size: 15px;
+}
+#metric #general{
+    display: flex;
+    justify-content: space-between;
 }
