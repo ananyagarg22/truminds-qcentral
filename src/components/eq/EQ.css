@@ -45,7 +45,7 @@
 #metric * {
     font-size: 15px;
 }
-#metric #general{
+#metric_label{
     display: flex;
     justify-content: space-between;
 }

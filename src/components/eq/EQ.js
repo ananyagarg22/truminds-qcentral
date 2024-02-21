@@ -13,7 +13,7 @@ function TeamEQ () {
                 
             </div>
             <div id="metric">
-                <div id='general'>
+                <div id='metric_label'>
                     <div>Empathy</div>
                     <div>{overallEQ['overAll'][0]['empathy']}</div>
                 </div>
@@ -26,7 +26,7 @@ function TeamEQ () {
                 </div>
             </div>
             <div id="metric">
-                <div id='general'>
+                <div id='metric_label'>
                     <div>Politeness</div>
                     <div>{overallEQ['overAll'][0]['politeness']}</div>
                 </div>
@@ -39,7 +39,7 @@ function TeamEQ () {
                 </div>
             </div>
             <div id="metric">
-                <div id='general'>
+                <div id='metric_label'>
                     <div>Talk Ratio</div>
                     <div>{overallEQ['overAll'][0]['talkRatio']}</div>
                 </div>
@@ -52,20 +52,20 @@ function TeamEQ () {
                 </div>
             </div>
             <div id="metric">
-                <div id='general'>
+                <div id='metric_label'>
                     <div>Talk Speed</div>
-                    <div>{overallEQ['overAll'][0]['talkSpeed']}</div>
+                    <div>{overallEQ['overAll'][0]['speakingRate']}</div>
                 </div>
                 <div>
                     <Slider 
-                        value={overallEQ['overAll'][0]['talkSpeed']}
-                           
+                        value={overallEQ['overAll'][0]['speakingRate']*100}
+                        min={0} max={100}
                     />
                     {/* <Range /> */}
                 </div>
             </div>
             <div id="metric">
-                <div id='general'>
+                <div id='metric_label'>
                     <div>Hesitation</div>
                     <div>{overallEQ['overAll'][0]['hesitation']}</div>
                 </div>
@@ -84,7 +84,7 @@ function YourEQ () {
     return(
         <div>
             <div id="metric">
-                <div id='general'>
+                <div id='metric_label'>
                     <div>Empathy</div>
                     <div>{overallEQ['overAll'][0]['usersStats'][0]['empathy']}</div>
                 </div>
@@ -97,7 +97,7 @@ function YourEQ () {
                 </div>
             </div>
             <div id="metric">
-                <div id='general'>
+                <div id='metric_label'>
                     <div>Politeness</div>
                     <div>{overallEQ['overAll'][0]['usersStats'][0]['politeness']}</div>
                 </div>
@@ -110,7 +110,7 @@ function YourEQ () {
                 </div>
             </div>
             <div id="metric">
-                <div id='general'>
+                <div id='metric_label'>
                     <div>Talk Ratio</div>
                     <div>{overallEQ['overAll'][0]['usersStats'][0]['talkRatio']}</div>
                 </div>
@@ -123,19 +123,20 @@ function YourEQ () {
                 </div>
             </div>
             <div id="metric">
-                <div id='general'>
+                <div id='metric_label'>
                     <div>Talk Speed</div>
-                    <div>{overallEQ['overAll'][0]['usersStats'][0]['talkSpeed']}</div>
+                    <div>{overallEQ['overAll'][0]['usersStats'][0]['speakingRate']}</div>
                 </div>
                 <div>
                     <Slider 
-                        value={overallEQ['overAll'][0]['usersStats'][0]['talkSpeed']}   
+                        value={overallEQ['overAll'][0]['usersStats'][0]['speakingRate']*100}
+                        min={0} max={100}
                     />
                     {/* <Range /> */}
                 </div>
             </div>
             <div id="metric">
-                <div id='general'>
+                <div id='metric_label'>
                     <div>Hesitation</div>
                     <div>{overallEQ['overAll'][0]['usersStats'][0]['hesitation']}</div>
                 </div>
