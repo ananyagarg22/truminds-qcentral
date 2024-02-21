@@ -37,7 +37,7 @@
     align-items: first baseline;
 }
 #metric {
-    padding: 10px;
+    padding: 20px;
     padding-left: 15px;
     padding-right: 15px;
     border-bottom: 1px solid rgb(241,242,244);
@@ -48,4 +48,25 @@
 #metric_label{
     display: flex;
     justify-content: space-between;
+}
+
+/* slider css */
+
+body .rc-slider-handle {
+    background: #0062D6;
+    border: #0062D6;
+    opacity: 1;
+    border-radius: 4px;
+    width: 0.3vw;
+    height: 2vh;
+}
+
+/* for track (till the marker) */
+body .rc-slider-track{
+    background: linear-gradient(to left, #B1B6BE 0%, #B1B6BE 40%, #D7DAE3 40%, #D7DAE3 60%, #EDF2FB 60%, #EDF2FB 100%);
+}
+
+/* for rail (after the marker) */
+body .rc-slider-rail{
+    background: linear-gradient(to left, #B1B6BE 0%, #B1B6BE 40%, #D7DAE3 40%, #D7DAE3 60%, #EDF2FB 60%, #EDF2FB 100%);
 }

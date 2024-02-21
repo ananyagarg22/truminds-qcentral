@@ -4,6 +4,24 @@ import {overallEQ} from './Eqdata.js';
 import Slider from 'rc-slider';
 import 'rc-slider/assets/index.css';
 
+function Metric(props) {
+    return (
+        <div id="metric">
+                <div id='metric_label'>
+                    <div>{props.label}</div>
+                    <div>{Math.round(props.value*100)/100}</div>
+                </div>
+                <div>
+                    <Slider 
+                        value={props.value*100}
+                        min={props.min} max={props.max}   
+                    />
+                    {/* <Range /> */}
+                </div>
+            </div>
+    );
+}
+
 function TeamEQ () {
     return (
         <div>
@@ -12,71 +30,96 @@ function TeamEQ () {
                 
                 
             </div>
-            <div id="metric">
+            <Metric 
+                label = "Empathy"
+                value = {overallEQ['overAll'][0]['empathy']}
+                min = {0}
+                max = {100}
+            />
+            {/* <div id="metric">
                 <div id='metric_label'>
                     <div>Empathy</div>
-                    <div>{overallEQ['overAll'][0]['empathy']}</div>
+                    <div>{Math.round(overallEQ['overAll'][0]['empathy']*100)/100}</div>
                 </div>
                 <div>
                     <Slider 
                         value={overallEQ['overAll'][0]['empathy']*100}
                         min={0} max={100}   
                     />
-                    {/* <Range /> */}
                 </div>
-            </div>
-            <div id="metric">
+            </div> */}
+            <Metric
+                label = "Politeness"
+                value = {overallEQ['overAll'][0]['politeness']}
+                min = {0}
+                max = {100}
+            />
+            {/* <div id="metric">
                 <div id='metric_label'>
                     <div>Politeness</div>
-                    <div>{overallEQ['overAll'][0]['politeness']}</div>
+                    <div>{Math.round(overallEQ['overAll'][0]['politeness']*100)/100}</div>
                 </div>
                 <div>
                     <Slider 
-                        value={overallEQ['overAll'][0]['usersStats'][0]['empathy']*100}
+                        value={overallEQ['overAll'][0]['usersStats'][0]['politeness']*100}
                         min={0} max={100}   
                     />
-                    {/* <Range /> */}
                 </div>
-            </div>
-            <div id="metric">
+            </div> */}
+            <Metric
+                label = "Talk Ratio"
+                value = {overallEQ['overAll'][0]['talkRatio']}
+                min = {0}
+                max = {100}
+            />
+            {/* <div id="metric">
                 <div id='metric_label'>
                     <div>Talk Ratio</div>
-                    <div>{overallEQ['overAll'][0]['talkRatio']}</div>
+                    <div>{Math.round(overallEQ['overAll'][0]['talkRatio']*100)/100}</div>
                 </div>
                 <div>
                     <Slider 
                         value={overallEQ['overAll'][0]['talkRatio']*100}
                         min={0} max={100}   
                     />
-                    {/* <Range /> */}
                 </div>
-            </div>
-            <div id="metric">
+            </div> */}
+            <Metric
+                label = "Talk Speed"
+                value = {overallEQ['overAll'][0]['speakingRate']}
+                min = {0}
+                max = {100}
+            />
+            {/* <div id="metric">
                 <div id='metric_label'>
                     <div>Talk Speed</div>
-                    <div>{overallEQ['overAll'][0]['speakingRate']}</div>
+                    <div>{Math.round(overallEQ['overAll'][0]['speakingRate']*100)/100}</div>
                 </div>
                 <div>
                     <Slider 
                         value={overallEQ['overAll'][0]['speakingRate']*100}
                         min={0} max={100}
                     />
-                    {/* <Range /> */}
                 </div>
-            </div>
-            <div id="metric">
+            </div> */}
+            <Metric
+                label = "Hesitation"
+                value = {overallEQ['overAll'][0]['hesitation']}
+                min = {0}
+                max = {100}
+            />
+            {/* <div id="metric">
                 <div id='metric_label'>
                     <div>Hesitation</div>
-                    <div>{overallEQ['overAll'][0]['hesitation']}</div>
+                    <div>{Math.round(overallEQ['overAll'][0]['hesitation']*100)/100}</div>
                 </div>
                 <div>
                     <Slider 
                         value={overallEQ['overAll'][0]['hesitation']*100}
                         min={0} max={100}   
                     />
-                    {/* <Range /> */}
                 </div>
-            </div>
+            </div> */}
         </div>
     )
 }
@@ -86,7 +129,7 @@ function YourEQ () {
             <div id="metric">
                 <div id='metric_label'>
                     <div>Empathy</div>
-                    <div>{overallEQ['overAll'][0]['usersStats'][0]['empathy']}</div>
+                    <div>{Math.round(overallEQ['overAll'][0]['usersStats'][0]['empathy']*100)/100}</div>
                 </div>
                 <div>
                     <Slider 
@@ -99,7 +142,7 @@ function YourEQ () {
             <div id="metric">
                 <div id='metric_label'>
                     <div>Politeness</div>
-                    <div>{overallEQ['overAll'][0]['usersStats'][0]['politeness']}</div>
+                    <div>{Math.round(overallEQ['overAll'][0]['usersStats'][0]['politeness']*100)/100}</div>
                 </div>
                 <div>
                     <Slider 
@@ -112,7 +155,7 @@ function YourEQ () {
             <div id="metric">
                 <div id='metric_label'>
                     <div>Talk Ratio</div>
-                    <div>{overallEQ['overAll'][0]['usersStats'][0]['talkRatio']}</div>
+                    <div>{Math.round(overallEQ['overAll'][0]['usersStats'][0]['talkRatio']*100)/100}</div>
                 </div>
                 <div>
                     <Slider 
@@ -125,7 +168,7 @@ function YourEQ () {
             <div id="metric">
                 <div id='metric_label'>
                     <div>Talk Speed</div>
-                    <div>{overallEQ['overAll'][0]['usersStats'][0]['speakingRate']}</div>
+                    <div>{Math.round(overallEQ['overAll'][0]['usersStats'][0]['speakingRate']*100)/100}</div>
                 </div>
                 <div>
                     <Slider 
@@ -138,7 +181,7 @@ function YourEQ () {
             <div id="metric">
                 <div id='metric_label'>
                     <div>Hesitation</div>
-                    <div>{overallEQ['overAll'][0]['usersStats'][0]['hesitation']}</div>
+                    <div>{Math.round(overallEQ['overAll'][0]['usersStats'][0]['hesitation']*100)/100}</div>
                 </div>
                 <div>
                     <Slider 
@@ -170,9 +213,7 @@ export function EQ (){
         </div>
         <div id='contentEQ'>
             {currentpage === 1 ? <YourEQ/>:<TeamEQ/>}
-
         </div>
-
     </div>
     )
     
