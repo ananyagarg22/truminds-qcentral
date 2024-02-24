@@ -6,9 +6,18 @@ body {
   margin: 0;
   background-color: rgb(233,236,244);  
 }
-.App {
+.Home {
   display: flex;
   height: 100vh;
   flex-direction: column;
   flex-wrap: wrap;
+}
+
+p {
+  text-align: center;
+  background-color: rgb(23,112,217);
+  color: white;
+  margin: 1vh 5vw;
+  padding: 1vh 1vw;
+  border-radius: 10px;
 }
