@@ -1,0 +1,25 @@
+#personal-playlist-form {
+    border: 1px solid transparent;
+    border-radius: 10px;
+    height: 70vh;
+    width: 50vw;
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+}
+
+#form-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 30px;
+    font-size: 20px;
+}
+
+#form-header img {
+    cursor: pointer;
+}
+
+#form {
+    padding: 30px;
+}

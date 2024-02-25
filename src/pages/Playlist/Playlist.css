@@ -1,0 +1,15 @@
+#createplaylistbutton button{
+    margin: 40px;
+    padding: 10px;
+    height: 6vh;
+    width: 11vw;
+    background-color: #0062D6;
+    color: white;
+    display: flex;
+    justify-content:space-around;
+    align-items: center;
+    font-size: 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}

@@ -14,12 +14,12 @@ function Home() {
     <div className="Home">
       <QScore/>
       <EQ/>
-      <p>
+      <p id="create-playlist-button">
         <Link 
           to="/playlist" 
           style={{textDecoration: 'none', color: 'white'}}
         > 
-          + Create Playlist
+          Go to Create Playlist Page
         </Link>
       </p>
       <Dealstatus/>

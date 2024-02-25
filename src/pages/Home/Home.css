@@ -13,7 +13,7 @@ body {
   flex-wrap: wrap;
 }
 
-p {
+#create-playlist-button {
   text-align: center;
   background-color: rgb(23,112,217);
   color: white;
