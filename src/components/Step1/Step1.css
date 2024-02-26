@@ -21,10 +21,33 @@
     justify-content: space-evenly;
     align-items: center;
 }
+#box-selected {
+    font-size: 90%;
+    background-color: #E2F0FF;
+    border: 1px solid #0062D6;
+    border-radius: 10px;
+    margin: 10px;
+    padding: 5px 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+}
 #box button {
     background-color: transparent;
     color: #0062D6;
     border: 1px solid #0062D6;
     width: 20vw;
     cursor: pointer;
+}
+#box-selected button {
+    background-color: #99C0EF;
+    color: #024FAC;
+    border: 1px solid #0062D6;
+    width: 20vw;
+    cursor: pointer;
+}
+#step1 #disabled-button{
+    background-color: lightgray;
+    cursor: not-allowed;
 }

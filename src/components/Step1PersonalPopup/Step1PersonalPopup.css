@@ -15,11 +15,48 @@
     padding: 30px;
     font-size: 20px;
 }
-
 #form-header img {
     cursor: pointer;
 }
-
+#line {
+    border: 0.5px solid lightgray;
+    margin: 0 30px ;
+}
 #form {
     padding: 30px;
+    padding-top: 0;
+}
+#form input {
+    width: 100%;
+    border-radius: 5px;
+    border-color: lightgray;
+}
+#name {
+    height: 30px;
+}
+#desc {
+    height: 20vh;
+}
+#form button{
+    margin: 40px;
+    padding: 10px;
+    height: 6vh;
+    width: 10vw;
+    background-color: #0062D6;
+    color: white;
+    display: flex;
+    justify-content:space-around;
+    align-items: center;
+    font-size: 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+#buttons {
+    display: flex;
+    justify-content: flex-end;
+}
+#form #disabled-button{
+    background-color: lightgray;
+    cursor: not-allowed;
 }

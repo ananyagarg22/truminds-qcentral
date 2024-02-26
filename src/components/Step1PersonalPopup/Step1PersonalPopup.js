@@ -1,8 +1,11 @@
-import React from 'react'
+import React, { useState } from 'react'
 import close from '../../assets/close.png';
 import './Step1PersonalPopup.css';
 
 function Step1PersonalPopup(props) {
+
+    const [name, setName] = useState("");
+    const [desc, setDesc] = useState("");
 
     return(props.trigger?
     <div id="popup">
@@ -13,8 +16,16 @@ function Step1PersonalPopup(props) {
                     props.setTrigger(false);
                 }}></img>
             </div>
+            <div id="line"></div>
             <div id='form'>
-                Location of Form
+                <h4>Name</h4>
+                <input id="name" type='text' onChange={e => setName(e.target.value)}></input>
+                <h4>Description</h4>
+                <input id="desc" type='text' onChange={e => setDesc(e.target.value)}></input>
+                <div id="buttons">
+                <button onClick={() => props.setTrigger(false)}>Cancel</button>
+                    <button id={name===""?"disabled-button":""}>Create</button>
+                </div>
             </div>
         </div>
     </div>
