@@ -1,0 +1,34 @@
+my_str = 'aaaaaaaaa'
+ans1 = ''
+
+counter1 = 0 #a =0
+for i in range(len(my_str)):
+    if i == len(my_str)-1:
+        if my_str[i] == my_str[i-1]:
+            counter1+=1
+            ans1 += str(counter1)
+            ans1 += my_str[i]
+        else:
+            ans1 += '1'+my_str[i]
+    else:
+        counter1 +=1
+        if my_str[i] != my_str[i+1]:
+            ans1 += str(counter1)
+            ans1 += my_str[i]
+            counter1 = 0
+
+counter2 = 1
+ans2 = ''
+for i in range(1, len(my_str)):
+    if i == len(my_str) - 1 and my_str[i] != my_str[i-1]:
+        ans2 += str(counter2) + my_str[i-1]
+        ans2 += '1' + my_str[i]
+    elif my_str[i] == my_str[i-1] and i != len(my_str)-1:
+        counter2 += 1
+    else:
+        ans2 += str(counter2)
+        ans2 += my_str[i-1]
+        counter2 = 1
+
+print(ans1)
+print(ans2)

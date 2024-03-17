@@ -23,8 +23,8 @@ function Step1PersonalPopup(props) {
                 <h4>Description</h4>
                 <input id="desc" type='text' onChange={e => setDesc(e.target.value)}></input>
                 <div id="buttons">
-                <button onClick={() => props.setTrigger(false)}>Cancel</button>
-                    <button id={name===""?"disabled-button":""}>Create</button>
+                    <button id="my-form-button" onClick={() => props.setTrigger(false)}>Cancel</button>
+                    <button id={name===""?"disabled-button":"my-form-button"}>Create</button>
                 </div>
             </div>
         </div>

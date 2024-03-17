@@ -8,7 +8,7 @@
     margin-top: 2px;
     
 }
-#button{
+#eq-tab{
     background: none;
     border: none;
     outline: none;
@@ -19,7 +19,7 @@
     border-bottom: 2px solid rgb(241,242,244);
     width: 50%;
 }
-#active-button{
+#active-eq-tab{
     background: none;
     border: none;
     outline: none;

@@ -35,7 +35,7 @@
     justify-content: space-between;
     font-size: 20px;
 }
-#toggle button{
+#toggle #collapsible-section{
     border: none;
     background-color: inherit;
     font-size: 14px;
@@ -49,8 +49,8 @@
     margin-bottom: 20px;
     font-weight: 700;
     border-bottom: 2px solid rgb(177, 176, 176);
-
 }
+
 #list{
     list-style: none;
     padding-left: 0;

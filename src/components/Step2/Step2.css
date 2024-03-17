@@ -1,0 +1,57 @@
+#step2 h6 {
+    margin: 0;
+    margin-top: 20px;
+    color: grey;
+}
+#alltabs {
+    display: flex;
+    border-bottom: 2px solid rgba(0, 0, 0, 0.1);
+}
+#alltabs #tab{
+    background: none;
+    box-shadow: none;
+    color: gray;
+    font-size: 13px;
+    border: 0;
+    border-bottom: 2px solid rgb(241,242,244);
+    border-radius: 0;
+    margin:0;
+}
+#alltabs #active-tab{
+    background: none;
+    color: rgb(0,98,214);
+    font-weight: bold;
+    padding: 10px;
+    font-size: 13px;
+    border: 0;
+    border-bottom: 2px solid rgb(0,98,214);
+    border-radius: 0;
+    margin:0;
+}
+#nav-buttons {
+    display: flex;
+    justify-content: flex-end;
+}
+
+#meddic {
+    margin-top: 10px;
+    padding: 10px 0px;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    border-radius: 7px;
+    display: flex;
+    justify-content: stretch;
+}
+
+#meddic #category {
+}
+
+#meddic header {
+
+}
+
+#option {
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    padding: 14px;
+    display: flex;
+    justify-content: space-between;
+}

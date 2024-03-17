@@ -12,7 +12,7 @@ function ActionItem (props) {
       };
   return (
     <div id='toggle'>
-      <button onClick={toggle}>{props.title}<img src={open?up_arrow:down_arrow} alt='arrows' height={15} width={15}></img></button>
+      <button id="collapsible-section" onClick={toggle}>{props.title}<img src={open?up_arrow:down_arrow} alt='arrows' height={15} width={15}></img></button>
       {open && 
       <div id='content'>
         <div id='title'>{props.title}</div>

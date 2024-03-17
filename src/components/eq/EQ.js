@@ -203,12 +203,12 @@ export function EQ (){
     <div id="EQ">
         <div id='allbuttons'>
             {currentpage===1?
-                <button id='active-button' onClick={() => setcurrentpage(1)}>Your EQ</button>:
-                <button id='button' onClick={() => setcurrentpage(1)}>Your EQ</button>
+                <button id='active-eq-tab' onClick={() => setcurrentpage(1)}>Your EQ</button>:
+                <button id='eq-tab' onClick={() => setcurrentpage(1)}>Your EQ</button>
             }
             {currentpage===2?
-                <button id='active-button' onClick={() => setcurrentpage(2)}>Team EQ</button>:
-                <button id='button' onClick={() => setcurrentpage(2)}>Team EQ</button>
+                <button id='active-eq-tab' onClick={() => setcurrentpage(2)}>Team EQ</button>:
+                <button id='eq-tab' onClick={() => setcurrentpage(2)}>Team EQ</button>
             }
         </div>
         <div id='contentEQ'>

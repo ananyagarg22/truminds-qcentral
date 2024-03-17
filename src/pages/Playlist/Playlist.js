@@ -9,7 +9,7 @@ function Playlist() {
 
     return (
         <div id='createplaylistbutton'>
-            <button onClick={() => setTrigger(true)}><img src={plus} alt='add' height={20} width={20}></img>Create Playlist</button>
+            <button id="playlist-popup-button" onClick={() => setTrigger(true)}><img src={plus} alt='add' height={20} width={20}></img>Create Playlist</button>
             <Popup trigger={trigger} setTrigger={setTrigger}/>
         </div>
     );

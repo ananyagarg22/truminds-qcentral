@@ -37,7 +37,11 @@
 #desc {
     height: 20vh;
 }
-#form button{
+#buttons {
+    display: flex;
+    justify-content: flex-end;
+}
+#form #my-form-button{
     margin: 40px;
     padding: 10px;
     height: 6vh;
@@ -51,10 +55,6 @@
     border: none;
     border-radius: 5px;
     cursor: pointer;
-}
-#buttons {
-    display: flex;
-    justify-content: flex-end;
 }
 #form #disabled-button{
     background-color: lightgray;
