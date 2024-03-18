@@ -4,17 +4,7 @@ import React from 'react';
 import close from '../../assets/close.png';
 import {Step1} from '../Step1/Step1.js';
 import {Step2} from '../Step2/Step2.js';
-
-function Step3 ({setPage}) {
-    return (
-        <div>
-            <h1>Step 3</h1>
-            <div id="step1">
-                <button onClick={() => setPage(2)}>Back</button>
-            </div>
-        </div>
-    )
-}
+import {Step3} from '../Step3/Step3.js';
 
 export function Popup (props){
 
@@ -30,6 +20,8 @@ export function Popup (props){
                 <img src={close} alt='close' onClick={() => {
                     props.setTrigger(false);
                     setcurrentpage(1);
+                    setMedicSelected({});
+                    setCustomSelected({});
                 }}></img>
             </div>
             <div id='allsteps'>

@@ -1,0 +1,73 @@
+#step3 {
+    display: flex;
+    flex-direction: column;
+}
+
+#nav-buttons {
+    padding: 10px;
+    display: flex;
+}
+
+#step3_content {
+    display:flex;
+}
+
+#step3_topics {
+    flex: 1;
+}
+
+#step3_topics #section_heading{
+    font-weight: bolder;
+    padding: 10px 0;
+}
+
+#step3_topics #section_content{
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    border-radius: 7px;
+    padding: 20px;
+}
+
+#single_topic_content {
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+    padding: 10px 0;
+    font-size: 80%;
+}
+
+#single_topic_content #tabcontent_topic {
+    flex:1;
+    font-weight: bolder;
+}
+
+#single_topic_content #tabcontent_topic_subtopics {
+    flex:1;
+    text-wrap: true;
+}
+
+#playlist_details {
+    flex: 0.70;
+    padding: 20px;
+}
+
+#playlist_details #playlist_name, #playlist_desc {
+    display: flex;
+    flex-direction: column;
+}
+
+#playlist_details label {
+    font-weight: bolder;
+    font-size: 90%;
+    padding: 5px 0;
+}
+
+#playlist_details input {
+    height: 5vh;
+    border-radius: 5px;
+}
+
+#playlist_details #playlist_desc textarea {
+    height: 20vh;
+    padding: 5px;
+    border-radius: 5px;
+}
