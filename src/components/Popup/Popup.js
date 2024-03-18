@@ -18,7 +18,9 @@ function Step3 ({setPage}) {
 
 export function Popup (props){
 
-    const[currentpage,setcurrentpage] = useState(1);
+    const [currentpage,setcurrentpage] = useState(1);
+    const [medicSelected, setMedicSelected] = useState({});
+    const [customSelected, setCustomSelected] = useState({});
 
     return(props.trigger?
     <div id="popup">
@@ -53,8 +55,8 @@ export function Popup (props){
                 currentpage === 1 ? 
                     <Step1 setPage={setcurrentpage}/> :
                     currentpage === 2 ? 
-                        <Step2 setPage={setcurrentpage}/> :
-                        <Step3 setPage={setcurrentpage}/>
+                        <Step2 setPage={setcurrentpage} medic={medicSelected} custom={customSelected} setMedic={setMedicSelected} setCustom={setCustomSelected}/> :
+                        <Step3 setPage={setcurrentpage} medic={medicSelected} custom={customSelected}/>
                 }
             </div>
         </div>
