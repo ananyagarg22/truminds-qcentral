@@ -3,11 +3,6 @@
     flex-direction: column;
 }
 
-#nav-buttons {
-    padding: 10px;
-    display: flex;
-}
-
 #step3_content {
     display:flex;
 }
@@ -69,5 +64,61 @@
 #playlist_details #playlist_desc textarea {
     height: 20vh;
     padding: 5px;
+    border-radius: 5px;
+}
+
+#nav-buttons {
+    padding: 10px;
+    display: flex;
+    justify-content: end;
+}
+
+#step3-disabled-button {
+    background-color: lightgray;
+    cursor: not-allowed;
+    margin-right: 10px;
+    height: 6vh;
+
+    width: 11vw;
+    color: grey;
+    display: flex;
+    justify-content:space-around;
+    align-items: center;
+    font-size: 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#my-step3-save {
+    color: #0062D6;
+    cursor: pointer;
+    /* margin: 40px; */
+    margin-right: 10px; 
+    /* padding: 10px; */
+    height: 6vh;
+    width: 11vw;
+    background-color: white;
+    display: flex;
+    justify-content:space-around;
+    align-items: center;
+    font-size: 15px;
+    border: 1px solid #0062D6;
+    border-radius: 5px;
+}
+
+#my-step3-submit {
+    background-color: #0062D6;
+    cursor: pointer;
+    /* margin: 40px; */
+    padding: 10px;
+    height: 6vh;
+    width: 11vw;
+    color: white;
+    display: flex;
+    justify-content:space-around;
+    align-items: center;
+    font-size: 15px;
+    border: none;
     border-radius: 5px;
 }

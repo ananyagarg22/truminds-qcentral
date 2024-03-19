@@ -25,6 +25,7 @@ function TabContent({content}) {
 
 export function Step3 ({setPage, medic, custom}) {
     const[currenttab,setcurrenttab] = useState(1);
+    const[playlistName, setPlaylistName] = useState("");
 
     const medicCount = Object.keys(medic).length
     const customCount = Object.keys(custom).length
@@ -64,7 +65,7 @@ export function Step3 ({setPage, medic, custom}) {
                 <div id="playlist_details">
                     <div id="playlist_name">
                         <label>Playlist Name</label>
-                        <input maxLength={50} placeholder='Enter Playlist name ...'></input>
+                        <input maxLength={50} placeholder='Enter Playlist name ...' type='text' value={playlistName} onChange={(e) => setPlaylistName(e.target.value)}></input>
                     </div>
                     <div id="playlist_desc">
                         <label>Description</label>
@@ -74,8 +75,8 @@ export function Step3 ({setPage, medic, custom}) {
             </div>
             <div id="nav-buttons">
                 <button id="my-button-back" onClick={() => setPage(2)}>Back</button>
-                <button>Save & Publish</button>
-                <button>Submit</button>
+                <button id={playlistName.length>0?"my-step3-save":"step3-disabled-button"} onClick={playlistName.length>0?() => {}: () => {}}>Save & Publish</button>
+                <button id={playlistName.length>0?"my-step3-submit":"step3-disabled-button"}>Submit</button>
             </div>
         </div>
     )

@@ -301,7 +301,7 @@ export function Step2 ({setPage, medic, custom, setMedic, setCustom}) {
                 </div>
                 <div id="nav-buttons">
                     <button id="my-button-back" onClick={() => setPage(1)}>Back</button>
-                    <button id="my-button-continue" onClick={() => setPage(3)}>Continue</button>
+                    <button id={medicLen+customLen>0?"my-button-continue":"step2-disabled-button"} onClick={medicLen+customLen>0?() => setPage(3): () => {}}>Continue</button>
                 </div>
             </div>
         </div>
