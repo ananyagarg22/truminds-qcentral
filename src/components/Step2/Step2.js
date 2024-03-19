@@ -271,8 +271,8 @@ function Custom({custom, setCustom, setCustomLen}) {
 export function Step2 ({setPage, medic, custom, setMedic, setCustom}) {
     const[currenttab,setcurrenttab] = useState(1);
 
-    const [medicLen, setMedicLen] = useState(0);
-    const [customLen, setCustomLen] = useState(0);
+    const [medicLen, setMedicLen] = useState(Object.keys(medic).length);
+    const [customLen, setCustomLen] = useState(Object.keys(custom).length);
 
     return (
         <div>
