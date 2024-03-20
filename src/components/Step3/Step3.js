@@ -2,17 +2,17 @@ import React, { useState } from 'react';
 import './Step3.css';
 
 function TabContent({content}) {
-    console.log("Content is "+content)
     return (
-        Object.entries(content).map((topic, topic_id) => {
+        Object.entries(content).map((topic_data) => {
             let all_subtopics = ""
+            let topic = topic_data[1]
             return(
                 <div id="single_topic_content">
                     <div id="tabcontent_topic">
-                        {content[topic_id]["category_title"]}
+                        {topic["category_title"]}
                     </div>
                     <div id="tabcontent_topic_subtopics">
-                        {content[topic_id]["category_options"].forEach(element => {
+                        {topic["category_options"].forEach(element => {
                             all_subtopics += ","+element
                         })}
                         {all_subtopics.slice(1)}

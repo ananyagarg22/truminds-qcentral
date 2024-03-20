@@ -24,7 +24,15 @@ function SelectedDataColumn({categoryData}) {
     );
 }
 
-function Medic({medic, setMedic, setMedicLen}) {
+function selectAll(content, setContent) {
+    let allContent = {}
+    for (let topic_id in content) {
+        allContent[topic_id] = content[topic_id]
+    }
+    setContent(allContent)
+}
+
+function Medic({medic, setMedic, medicLen, setMedicLen}) {
 
     const [category, setCategory] = useState(0);
 
@@ -95,7 +103,17 @@ function Medic({medic, setMedic, setMedicLen}) {
             <div id="column1">
                 <div id="header">
                     Category
-                    <Switch/>
+                    <Switch onChange={
+                        (checked, event) => {
+                            if (checked === true) {
+                                selectAll(medicData, setMedic)
+                                setMedicLen(medicData.length)
+                            } else {
+                                setMedic({})
+                                setMedicLen(0)
+                            }
+                        }
+                    } checked={medicLen === medicData.length}/>
                 </div>
                 <div id="categories">
                     {
@@ -112,7 +130,7 @@ function Medic({medic, setMedic, setMedicLen}) {
                                                     } else {
                                                         delete medic[medicCategory['id']]
                                                     }
-                                                    console.log(medic);
+                                                    // console.log(medic);
                                                     setMedic(medic);
                                                     setMedicLen(Object.keys(medic).length)
                                                 }
@@ -134,7 +152,7 @@ function Medic({medic, setMedic, setMedicLen}) {
                                                     } else {
                                                         delete medic[medicCategory['id']]
                                                     }
-                                                    console.log(medic);
+                                                    // console.log(medic);
                                                     setMedic(medic);
                                                     setMedicLen(Object.keys(medic).length)
                                                 }
@@ -155,7 +173,7 @@ function Medic({medic, setMedic, setMedicLen}) {
     );
 }
 
-function Custom({custom, setCustom, setCustomLen}) {
+function Custom({custom, setCustom, customLen, setCustomLen}) {
 
     const [category, setCategory] = useState(0);
 
@@ -208,7 +226,17 @@ function Custom({custom, setCustom, setCustomLen}) {
             <div id="column1">
                 <div id="header">
                     Category
-                    <Switch/>
+                    <Switch onChange={
+                        (checked, event) => {
+                            if (checked === true) {
+                                selectAll(customData, setCustom)
+                                setCustomLen(customData.length)
+                            } else {
+                                setCustom({})
+                                setCustomLen(0)
+                            }
+                        }
+                    } checked={customLen === customData.length}/>
                 </div>
                 <div id="categories">
                 {
@@ -225,7 +253,7 @@ function Custom({custom, setCustom, setCustomLen}) {
                                                     } else {
                                                         delete custom[customCategory['id']]
                                                     }
-                                                    console.log(custom);
+                                                    // console.log(custom);
                                                     setCustom(custom);
                                                     setCustomLen(Object.keys(custom).length)
                                                 }
@@ -247,7 +275,7 @@ function Custom({custom, setCustom, setCustomLen}) {
                                                     } else {
                                                         delete custom[customCategory['id']]
                                                     }
-                                                    console.log(custom);
+                                                    // console.log(custom);
                                                     setCustom(custom);
                                                     setCustomLen(Object.keys(custom).length)
                                                 }
@@ -297,7 +325,7 @@ export function Step2 ({setPage, medic, custom, setMedic, setCustom}) {
                     }
                 </div>
                 <div id="tab-content">
-                    {currenttab===1?<Medic medic={medic} setMedic={setMedic} setMedicLen={setMedicLen}/>:<Custom custom={custom} setCustom={setCustom} setCustomLen={setCustomLen}/>}
+                    {currenttab===1?<Medic medic={medic} setMedic={setMedic} medicLen={medicLen} setMedicLen={setMedicLen}/>:<Custom custom={custom} setCustom={setCustom} customLen={customLen} setCustomLen={setCustomLen}/>}
                 </div>
                 <div id="nav-buttons">
                     <button id="my-button-back" onClick={() => setPage(1)}>Back</button>
