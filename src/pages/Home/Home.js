@@ -22,6 +22,15 @@ function Home() {
           Go to Create Playlist Page
         </Link>
       </p>
+      <p id="deals-button">
+        <Link 
+          to="/deals" 
+          style={{textDecoration: 'none', color: 'white'}}
+        > 
+          Go to Deals Page
+        </Link>
+      </p>
+
       <Dealstatus/>
       <UpcomingMeetings/>
       <LearningProgress/>

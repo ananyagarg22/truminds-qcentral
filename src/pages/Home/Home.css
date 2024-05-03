@@ -21,3 +21,11 @@ body {
   padding: 1vh 1vw;
   border-radius: 10px;
 }
+#deals-button{
+  text-align: center;
+  background-color: rgb(23,112,217);
+  color: white;
+  margin: 1vh 5vw;
+  padding: 1vh 1vw;
+  border-radius: 10px;
+}
