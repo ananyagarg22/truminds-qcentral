@@ -7,7 +7,7 @@
     padding: 10px;
     font-size: 20px;
 }
-#dealstandingdialoguebox {
+#dialoguebox {
     background-color: white;
     border-radius: 10px;
     margin: 2vh;
@@ -15,13 +15,17 @@
     width: fit-content;
 }
 #dialogueboxheading{
-    padding: 2%;
     padding-left: 0;
     padding-top: 10px;
     padding-left: 10px;
+    padding-bottom: 5%;
 }
-#quadrants {
+#quadrantChart {
     width: 58vw;
+    height: min-content;
+}
+#lineChart {
+    width: 90vw;
     height: min-content;
 }
 /* .quadrantrow {
