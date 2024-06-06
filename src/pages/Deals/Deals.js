@@ -1,4 +1,4 @@
-import React, {useEffect, useRef} from 'react'
+import React, {useEffect, useRef, useState} from 'react'
 import './Deals.css';
 import Highcharts from 'highcharts';
 import HighchartsReact from 'highcharts-react-official';
@@ -9,11 +9,19 @@ import { dealsLineData } from './dealsLineData';
 HC_more(Highcharts);
 
 const QuadrantChart = ({data}) => {
-  const chartRef = useRef(null);
+  const chartRefAtRisk = useRef(null);
+  const chartRefExceeding = useRef(null);
+  const chartRefExploratory = useRef(null);
+  const chartRefDormant = useRef(null);
+  
+  const [currentTotals, setCurrentTotals] = useState({ q1: 0, q2: 0, q3: 0, q4: 0 });
 
   useEffect(() => {
-      if (chartRef.current) {
-          const chart = chartRef.current.chart;
+      if (chartRefAtRisk.current || chartRefExceeding.current || chartRefExploratory.current || chartRefDormant.current) {
+          const chartAtRisk = chartRefAtRisk.current.chart;
+          const chartExceeding = chartRefExceeding.current.chart;
+          const chartExploratory = chartRefExploratory.current.chart;
+          const chartDormant = chartRefDormant.current.chart;
           // Calculate totals for each quadrant
           const totals = { q1: 0, q2: 0, q3: 0, q4: 0 };
           data.forEach(function(point) {
@@ -53,38 +61,98 @@ const QuadrantChart = ({data}) => {
                   }
                 }
               } 
-              
-              // if (point.x > 10 && point.y > 10) {
-              //     totals.q4 += point.size;
-              // } else if (point.x <= 10 && point.y > 10) {
-              //     totals.q3 += point.size;
-              // } else if (point.x <= 10 && point.y <= 10) {
-              //     totals.q2 += point.size;
-              // } else {
-              //     totals.q1 += point.size;
-              // }
 
           });
+          setCurrentTotals(totals);
+          const maxTotalAmount = Math.max(totals.q1, totals.q2, totals.q3, totals.q4);
+          // Method 1 of scaling
+          // const totalSumZ = totals.q1 + totals.q2 + totals.q3 + totals.q4;
+          // const scalingFactor = totalSumZ > 0 ? Math.min(200 / maxTotalAmount, 1) : 1;
+          // const scalingFactorQ1 = scalingFactor;
+          // const scalingFactorQ2 = scalingFactor;
+          // const scalingFactorQ3 = scalingFactor;
+          // const scalingFactorQ4 = scalingFactor;
+          // const zQ1 = totals.q1 * scalingFactor;
+          // const zQ2 = totals.q2 * scalingFactor;
+          // const zQ3 = totals.q3 * scalingFactor;
+          // const zQ4 = totals.q4 * scalingFactor;
+          // Method 2 of scaling
+          const scalingFactorQ1 = totals.q1 > 0 ? maxTotalAmount / totals.q1 : 1;
+          const scalingFactorQ2 = totals.q2 > 0 ? maxTotalAmount / totals.q2 : 1;
+          const scalingFactorQ3 = totals.q3 > 0 ? maxTotalAmount / totals.q3 : 1;
+          const scalingFactorQ4 = totals.q4 > 0 ? maxTotalAmount / totals.q4 : 1;
+          const zQ1 = totals.q1/scalingFactorQ1;
+          const zQ2 = totals.q2/scalingFactorQ2;
+          const zQ3 = totals.q3/scalingFactorQ3;
+          const zQ4 = totals.q4/scalingFactorQ4; 
+          // console.log("Updating values in Q3 with");
+          // console.log(totals.q3);
+          // console.log(scalingFactorQ3);
           // Update the series with quadrant totals
-          chart.update({
+          chartAtRisk.update({
               series: [{
-                  name: 'Quadrant Totals',
+                  name: '',
                   type: 'bubble',
                   data: [{
-                      x: 5, y: 5, z: totals.q3
-                  }, {
-                      x: 15, y: 5, z: totals.q4
-                  }, {
-                      x: 5, y: 15, z: totals.q1
-                  }, {
-                      x: 15, y: 15, z: totals.q2
+                    x: 0, y: 0, z: zQ3, total: totals.q3, sf: scalingFactorQ3
                   }],
                   marker: {
-                      fillColor: 'rgba(128, 128, 128, 0.5)',
+                      fillColor: 'rgb(170,0,0)',
                       lineWidth: 0,
-                      lineColor: 'rgba(128, 128, 128, 1)'
+                      lineColor: 'rgb(170,0,0)'
                   }
               }]
+          }, true, true);
+          // console.log("Updating values in Q2 with");
+          // console.log(totals.q2);
+          // console.log(scalingFactorQ2);
+          chartExceeding.update({
+            series: [{
+                name: '',
+                type: 'bubble',
+                data: [{
+                  x: 0, y: 0, z: zQ2, total: totals.q2, sf: scalingFactorQ2
+                }],
+                marker: {
+                    fillColor: 'rgba(0,255,0,1)',
+                    lineWidth: 0,
+                    lineColor: 'rgba(0,255,0,1)'
+                }
+            }]
+          }, true, true);
+          // console.log("Updating values in Q1 with");
+          // console.log(totals.q1);
+          // console.log(scalingFactorQ1);
+          chartExploratory.update({
+            series: [{
+              name: '',
+              type: 'bubble',
+              data: [{
+                x: 0, y: 0, z: zQ1, total: totals.q1, sf: scalingFactorQ1
+              }],
+              marker: {
+                fillColor: 'rgb(0,98,214)',
+                lineWidth: 0,
+                lineColor: 'rgb(0,98,214)'
+              }
+            }]
+          }, true, true);
+          // console.log("Updating values in Q4 with");
+          // console.log(totals.q4);
+          // console.log(scalingFactorQ4);
+          chartDormant.update({
+            series: [{
+                name: '',
+                type: 'bubble',
+                data: [{
+                  x: 0, y: 0, z: zQ4, total: totals.q4, sf: scalingFactorQ4
+                }],
+                marker: {
+                  fillColor: 'rgb(109,111,121)',
+                  lineWidth: 0,
+                  lineColor: 'rgb(109,111,121)'
+                }
+            }]
           }, true, true);
       }
   }, [data]);
@@ -92,84 +160,431 @@ const QuadrantChart = ({data}) => {
   const quadrantChartOptions = {
     chart: {
         type: 'bubble',
+        backgroundColor: 'transparent', 
+        height: 700,
+        width: 500,
+    },
+    credits: {
+      enabled: false,
     },
     title: {
-        text: ''
+      text: ''
+    },
+    legend: {
+      enabled: false,
     },
     xAxis: {
-        title: {
-            text: ''
-        },
-        min: 0,
-        max: 20,
-        tickInterval: 0,
-        plotLines: [{
-            color: 'rgba(128, 128, 128, 0.5)',
-            dashStyle: 'dash',
-            width: 1,
-            value: 10
-        }]
+        // title: {
+        //     text: ''
+        // },
+        // lineWidth: 0,
+        // tickInterval: 0,
+        // tickWidth: 0,
+        // minorTickWidth: 0,
+        // labels: {
+        //   enabled: false
+        // },
+        visible: false,
     },
     yAxis: {
-        title: {
-            text: ''
-        },
-        min: 0,
-        max: 20,
-        tickInterval: 0,
-        plotLines: [{
-            color: 'rgba(128, 128, 128, 0.5)',
-            dashStyle: 'dash',
-            width: 1,
-            value: 10
-        }]
+        // title: {
+        //     text: ''
+        // },
+        // tickInterval: 0,
+        // tickWidth: 0,
+        // minorTickWidth: 0,
+        // labels: {
+        //   enabled: false
+        // },
+        visible: false,
     },
     plotOptions: {
         bubble: {
             tooltip: {
-                headerFormat: '<b>{point.name}</b><br>',
-                pointFormat: 'Size: {point.z}'
+                headerFormat: '<b>{series.name}</b><br>',
+                pointFormat: 'Value: {point.total}<br>Scaling Factor: {point.sf}'
             }
         }
     },
-    series: [{
-      name: 'Quadrant Totals',
-      type: 'bubble',
-      data: [{
-          name: 'At Risk',
-          x: 5, y: 5, z: 1,
-          // fillColor: 'rgba(204,224,247,1)',
-          color: 'rgba(204,224,247,1)' // Quadrant 1 color
-      }, {
-          name: 'Dormant',
-          x: 15, y: 5, z: 1,
-          // fillColor: 'rgba(204,226,215,1)',
-          color: 'rgba(204,226,215,1)' // Quadrant 2 color
-      }, {
-          name: 'Exploratory',
-          x: 5, y: 15, z: 1,
-          // fillColor: 'rgba(226,226,228,1)',
-          color: 'rgba(226,226,228,1)' // Quadrant 3 color
-      }, {
-          name: 'Exceeding',
-          x: 15, y: 15, z: 1,
-          // fillColor: 'rgba(238,204,204,1)',
-          color: 'rgba(238,204,204,1)' // Quadrant 4 color
-      },],
-      marker: {
-          enabled: true
-      }
-  }]
 }
 
+  function valueFormatter(val) {
+    var str = "USD ";
+    if(val===0) {
+      return "";
+    }
+    if(val<Math.pow(10,3)) {
+      str += val;
+    } else if (val>=Math.pow(10,3) && val<Math.pow(10,6)) {
+      str += (val/Math.pow(10,3)).toFixed(3) + "K"
+    } else if (val>=Math.pow(10,6) && val<Math.pow(10,9)) {
+      str += (val/Math.pow(10,6)).toFixed(3) + "M"
+    } else if (val>=Math.pow(10,9) && val<Math.pow(10,12)) {
+      str += (val/Math.pow(10,9)).toFixed(3) + "B"
+    } else if (val>=Math.pow(10,12) && val<Math.pow(10,15)) {
+      str += (val/Math.pow(10,12)).toFixed(3) + "T"
+    }
+    return str;
+  }
+
   return (
-      <HighchartsReact
-          highcharts={Highcharts}
-          options={quadrantChartOptions}
-          ref={chartRef}
-      />
+    <>
+      <div id="quadrantRow">
+        <div id="q1Container">
+          <div id="quadrant" style={{backgroundColor: 'rgb(204,224,247)'}}>
+            <HighchartsReact id="oneQuadrant"
+              highcharts={Highcharts}
+              options={quadrantChartOptions}
+              ref={chartRefExploratory}
+              />
+            <div id="quadrantTitle">Exploratory</div>
+            <div id="quadrantTotal">{valueFormatter(currentTotals.q1)}</div>
+          </div>
+        </div>
+        <div id="q2Container">
+          <div id="quadrant" style={{backgroundColor: 'rgb(204,226,215)'}}>
+            <HighchartsReact id="oneQuadrant"
+              highcharts={Highcharts}
+              options={quadrantChartOptions}
+              ref={chartRefExceeding}
+              />
+            <div id="quadrantTitle">Exceeding</div>
+            <div id="quadrantTotal">{valueFormatter(currentTotals.q2)}</div>
+          </div>
+        </div>
+      </div>
+      <div id="quadrantRow">
+        <div id="q3Container">
+          <div id="quadrant" style={{backgroundColor: 'rgb(238,204,204)'}}>
+            <HighchartsReact id="oneQuadrant"
+              highcharts={Highcharts}
+              options={quadrantChartOptions}
+              ref={chartRefAtRisk}
+              />
+            <div id="quadrantTitle">At Risk</div>
+            <div id="quadrantTotal">{valueFormatter(currentTotals.q3)}</div>
+          </div>
+        </div>
+        <div id="q4Container">
+          <div id="quadrant" style={{backgroundColor: 'rgb(226,226,228)'}}>
+            <HighchartsReact id="oneQuadrant"
+              highcharts={Highcharts}
+              options={quadrantChartOptions}
+              ref={chartRefDormant}
+              />
+            <div id="quadrantTitle">Dormant</div>
+            <div id="quadrantTotal">{valueFormatter(currentTotals.q4)}</div>
+          </div>
+        </div>
+      </div>
+    </>
   );
 };
+
+const QuadrantChart2 = ({data}) => {
+  const chartRefDeals = useRef(null);
+
+  useEffect( () => {
+    const tData=[];
+    let tpositveEq = 0;
+    let tnegativeEq = 0;
+    if (chartRefDeals.current){
+      const chartDeals = chartRefDeals.current.chart;
+      data.forEach(function(point) {
+        let engagementvalue=0;
+        let sentimentvalue=0;
+        
+        for(var i=0;i<point.score.length;i++) {
+          if(point.score[i].type==='engagement') {
+            engagementvalue = point.score[i].value;
+          }
+          
+          if(point.score[i].type==='sentiment') {
+           sentimentvalue = point.score[i].value;
+          }
+        }
+        if (engagementvalue * 100 && point.opptyStatus === 'active') {
+          if (sentimentvalue > 0.5 && engagementvalue > 0.5) {
+              tData.push({
+                  x: sentimentvalue * 100,
+                  y: engagementvalue * 100,
+                  name: point.account?.name ?? '',
+                  amount: point.opptyAmount,
+                  z: point.opptyAmount,
+                  opptyDate: point.opptyCreateDate,
+                  oppty_id: point.id,
+                  url: point.account.logoUrl,
+              });
+              tpositveEq++;
+          } else if (sentimentvalue < 0.5 && engagementvalue > 0.5) {
+              tData.push({
+                  x: -sentimentvalue * 100,
+                  y: engagementvalue * 100,
+                  name: point.account?.name ?? '',
+                  amount: point.opptyAmount,
+                  z: point.opptyAmount,
+                  opptyDate: point.opptyCreateDate,
+                  oppty_id: point.id,
+                  url: point.account.logoUrl,
+              });
+          } else if (sentimentvalue < 0.5 && engagementvalue < 0.5) {
+              tData.push({
+                  x: -sentimentvalue * 100,
+                  y: -engagementvalue * 100,
+                  name: point.account?.name ?? '',
+                  amount: point.opptyAmount,
+                  z: point.opptyAmount,
+                  opptyDate: point.opptyCreateDate,
+                  oppty_id: point.id,
+                  url: point.account.logoUrl,
+              });
+              tnegativeEq++;
+          } else if (sentimentvalue > 0.5 && engagementvalue < 0.5) {
+              tData.push({
+                  x: sentimentvalue * 100,
+                  y: -engagementvalue * 100,
+                  name: point.account?.name ?? '',
+                  amount: point.opptyAmount,
+                  z: point.opptyAmount,
+                  opptyDate: point.opptyCreateDate,
+                  oppty_id: point.id,
+                  url: point.account.logoUrl,
+              });
+          }
+        }
+      });
+      tData.map((data) => {
+        data.y = data.y > 90 ? 87 : data.y;
+    });
+
+      chartDeals.update({
+        series: [{
+            name: '',
+            type: 'bubble',
+            data:tData,
+            marker: {
+                fillColor: 'rgb(170,0,0)',
+                lineWidth: 0,
+                lineColor: 'rgb(170,0,0)'
+            }
+        }]
+    }, true, true);
+    }
+  } ,[data])
+
+  const quadrantChartOptions2 = {
+    chart: {
+      type: 'bubble',
+      plotBackgroundColor: '#fff',
+      height: 350,
+      width: 500,
+      zoomType: 'xy',
+      backgroundColor: 'transparent',
+      borderRadius: '12',
+      marginLeft: 50,
+      marginTop: 40,
+      className: 'teamQChart',
+  },
+  credits: {
+      enabled: false,
+    },
+    title: {
+      text: ''
+    },
+    legend: {
+      enabled: false,
+    },
+    xAxis: [
+      {
+          title: {
+              text: '',
+          },
+          min: -100,
+          max: 100,
+          tickInterval: 100,
+          tickLength: 0,
+          labels: {
+              useHTML: true,
+              formatter(value) {
+                  if (value.value === -100) {
+                      return '';
+                  }
+                  if (value.value === 100) {
+                      return '';
+                  }
+                  return '<p style="font-size:12px;font-family:Poppins Bold !important;font-weight:700;padding:2px 10px;border-radius:10px;display:flex;align-items:center;margin-left:10px;color:#333333;margin-top:0px;">Engagement</p>';
+              },
+          },
+          minorTickLength: 0,
+          gridLineWidth: 1,
+          lineColor: '#ccc',
+          lineWidth: 1,
+      },
+      {
+          title: {
+              text: '',
+          },
+          min: -100,
+          max: 100,
+          tickInterval: 100,
+          tickLength: 0,
+          labels: {
+              useHTML: true,
+              formatter(value) {
+                  if (value.value === -100) {
+                      return '<p style="font-size:12px;font-weight:500;padding:2px 10px;border-radius:10px;display:flex;align-items:center;margin-left:10px;margin-top:15px;color:#8B8BA0;transform: translate(10px, 15px);">Low</p>';
+                  }
+                  if (value.value === 100) {
+                      return '<p style="font-size:12px;font-weight:500;padding:2px 10px;border-radius:10px;display:flex;align-items:center;margin-right:30px;margin-top: 15px;color:#8B8BA0;transform: translate(0px, 15px);">High</p>';
+                  }
+              },
+          },
+          minorTickLength: 0,
+          gridLineWidth: 1,
+          lineColor: '#ccc',
+          lineWidth: 1,
+          opposite: true,
+      },
+  ],
+  yAxis: [
+      {
+          title: {
+              text: '',
+              rotation: 0,
+          },
+          labels: {
+              rotation: -90,
+              useHTML: true,
+              formatter(value) {
+                  if (value.value === -105) {
+                      return '';
+                  }
+                  if (value.value === 105) {
+                      return '';
+                  }
+                  return '<p style="font-size:12px;font-family:Poppins Bold !important;font-weight:700;padding:2px 10px;border-radius:10px;display:flex;align-items:center;margin-right:17px;margin-left:12px;color:#333333;">Sentiment</p>';
+              },
+              autoRotation: 90,
+              style: {
+                  marginTop: '10px',
+                  marginBottom: '10px',
+              },
+          },
+          min: -105,
+          max: 105,
+          tickInterval: 105,
+          tickLength: 3,
+          minorTickLength: 0,
+          lineColor: '#ccc',
+          lineWidth: 1,
+      },
+      {
+          title: {
+              text: '',
+              rotation: 0,
+          },
+          labels: {
+              rotation: -90,
+              useHTML: true,
+              formatter(value) {
+                  if (value.value === -100) {
+                      return '<p style="font-size:12px;font-weight:500;border-radius:10px;display:flex;align-items:center;margin-right:-62px;color:#8B8BA0;margin-top:-5px">Negative</p>';
+                  }
+                  if (value.value === 100) {
+                      return '<p style="font-size:12px;font-weight:500;border-radius:10px;display:flex;align-items:center;margin-top:-5px;color:#8B8BA0;margin-right:48px;">Positive</p>';
+                  }
+              },
+              autoRotation: 90,
+              style: {
+                  marginLeft: '20px',
+                  marginRight: '20px',
+              },
+          },
+          min: -100,
+          max: 100,
+          tickInterval: 100,
+          tickLength: 3,
+          minorTickLength: 0,
+          lineColor: '#ccc',
+          lineWidth: 1,
+          opposite: true,
+      },
+  ],
+  series: [
+    {
+        type: 'bubble',
+        color: '#4DA1FF',
+        cursor: 'pointer',
+        maxSize: 35,
+        minSize: 10,
+        allowPointSelect: true,
+        // point: {
+        //     events: {
+        //         click() {
+        //             handleClick(this);
+        //         },
+        //         mouseOver() {
+        //             handleMouseOver(this);
+        //         },
+        //     },
+        // },
+        cluster: {
+            enabled: false,
+            dataLabels: {
+                style: {
+                    fontSize: '12px',
+                    backgroundColor: '#00A3E0',
+                },
+                className: 'highlight',
+                y: -1,
+            },
+            allowOverlap: false,
+            animation: true,
+            layoutAlgorithm: {
+                type: 'grid',
+                gridSize: 100,
+            },
+        },
+        // data: dataBubble,
+        // dataLabels: {
+        //     enabled: false,
+        //     useHTML: true,
+        //     crop: false,
+        //     overflow: 'none',
+        //     formatter() {
+        //         const { point } = this;
+        //         return renderToString(<div className={point.selected === true ? 'blue' : ''}>test</div>);
+        //     },
+        //     y: 20,
+        //     allowOverlap: false,
+        // },
+        marker: {
+            enabled: true,
+            symbol: 'circle',
+            radius: 7,
+        },
+    },
+],
+  // plotOptions: {
+  //     bubble: {
+  //         tooltip: {
+  //             headerFormat: '<b>{series.name}</b><br>',
+  //             pointFormat: 'Value: {point.total}<br>Scaling Factor: {point.sf}'
+  //         }
+  //     }
+  // },
+  }
+return(
+  <div id='Quadrantchart2'>
+  <HighchartsReact id="oneQuadrant"
+    highcharts={Highcharts}
+    options={quadrantChartOptions2}
+    ref={chartRefDeals}
+    />
+  </div>
+
+)
+}
 
 // var data = [
 //   { x: 5, y: 5, size: 10 },
@@ -179,15 +594,53 @@ const QuadrantChart = ({data}) => {
 // ];
 
 const LineChart = ({ data }) => {
-  const dateData = data.map(item => {
+  const tempDateData = data.map(item => {
     // Construct a date object using month and year
     const formattedDate = new Date(`${item.year}-${item.month}-01`).toLocaleString('en-US', { month: 'short', year: 'numeric' });
-    return [formattedDate, item.dealCycle, item.sentiment*100, item.won*100];
+    const {months, weeks, days}  = convertDealCycle(item.dealCycle, false);
+    return [formattedDate, months, item.sentiment*100, item.won*100];
   });
-
+  
   var maxValueForDealCycle = 0;
 
-  maxValueForDealCycle = dateData.map(item => item[1] > maxValueForDealCycle? item[1]: maxValueForDealCycle);
+  for (var index=0;index<tempDateData.length;index++) {
+    var item = tempDateData[index];
+    if (item[1] > maxValueForDealCycle) {
+      maxValueForDealCycle = item[1]
+    }
+  }
+
+  console.log(maxValueForDealCycle);
+
+  function convertDealCycle (d = 0, year = true) {
+    let months = 0;
+    let years = 0;
+    let days = 0;
+    let weeks = 0;
+    while (d > 0) {
+        if (d >= 365 && year) {
+            years++;
+            d -= 365;
+        } else if (d >= 30) {
+            months++;
+            d -= 30;
+        } else if (d >= 7) {
+            weeks++;
+            d -= 7;
+        } else {
+            days++;
+            d--;
+        }
+    }
+    return {
+        years,
+        months,
+        weeks,
+        days,
+    };
+  }
+
+  const dateData = tempDateData;
 
   const lineChartOptions = {
     chart: {
@@ -316,6 +769,7 @@ const LineChart = ({ data }) => {
               lineWidth: 2,
               lineColor: null,
           },
+          yAxis: 1,
           // visible: trend[data[0]?.name],
           // opacity: trend[data[0]?.name] ? 1 : 0.3,
       },
@@ -432,8 +886,15 @@ function Deals() {
           <LineChart data={dealsLineData}/>
         </div>
       </div>
+      <div id="dialoguebox">
+        <div id='dialogueboxheading'>
+          <b> Bubble Chart </b>
+        </div>
+      <div id='quadrantchart2'>
+          <QuadrantChart2 data={dealsQuadrantData}/>
+        </div>
+      </div>
     </div>
   )
 }
-
 export default Deals;

@@ -18,39 +18,52 @@
     padding-left: 0;
     padding-top: 10px;
     padding-left: 10px;
-    padding-bottom: 5%;
+    padding-bottom: 20px;
 }
 #quadrantChart {
-    width: 58vw;
+    width: min-content;
     height: min-content;
 }
 #lineChart {
     width: 90vw;
     height: min-content;
 }
-/* .quadrantrow {
+#q1Container {
+    padding: 0.01%;
+    border-right: 2px dashed rgb(222,222,222);
+    border-bottom: 2px dashed rgb(222,222,222);
+}
+#q2Container {
+    padding: 0.01%;
+    border-bottom: 2px dashed rgb(222,222,222);
+}
+#q3Container {
+    padding: 0.01%;
+    border-right: 2px dashed rgb(222,222,222);
+}
+#q4Container {
+    padding: 0.01%;
+}
+#quadrant {
+    position: relative;
+    margin: 10px;
+}
+#chartContainer {
+    margin: 10px;
+}
+#quadrantTitle {
+    position: absolute;
+    top: 3%;
+    left: 3%;
+}
+#quadrantTotal {
+    position: absolute;
+    top: 43%;
+    left: 42%;
+}
+#oneQuadrant {
+    position: absolute;
+}
+#quadrantRow {
     display: flex;
-    flex: 1;
-    padding: 3px;
 }
-.quadrantcolumn {
-    display:flex;
-    flex: 1;
-    margin: 3px;
-}
-#exploratory {
-    background-color: #CCE0F7;
-    border-right: 0.5px dashed grey;
-}
-#exceeding {
-    background-color: #E5F0EB;
-}
-#atrisk {
-    background-color: #EECCCC;
-    border-right: 0.5px dashed grey;
-    border-top: 0.5px dashed grey;
-}
-#dormant {
-    background-color: #E2E2E4;
-    border-top: 0.5px dashed grey;
-} */
