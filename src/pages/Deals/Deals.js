@@ -5,6 +5,10 @@ import HighchartsReact from 'highcharts-react-official';
 import HC_more from "highcharts/highcharts-more"; 
 import { dealsQuadrantData } from './dealsQuadrantData';
 import { dealsLineData } from './dealsLineData';
+import {Timeline} from './Timeline';
+
+import {meetingData} from './meetingdata.js';
+import {emailData} from './emaildata.js';
 
 HC_more(Highcharts);
 
@@ -894,6 +898,7 @@ function Deals() {
           <QuadrantChart2 data={dealsQuadrantData}/>
         </div>
       </div>
+      <Timeline meetingData={meetingData} emailData={emailData}/>
     </div>
   )
 }
