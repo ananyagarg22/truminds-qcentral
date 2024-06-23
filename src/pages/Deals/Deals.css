@@ -67,3 +67,7 @@
 #quadrantRow {
     display: flex;
 }
+#timelineChart {
+    padding: 1.5%;
+    border-radius: 10px;
+}

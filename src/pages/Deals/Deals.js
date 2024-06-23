@@ -614,8 +614,6 @@ const LineChart = ({ data }) => {
     }
   }
 
-  console.log(maxValueForDealCycle);
-
   function convertDealCycle (d = 0, year = true) {
     let months = 0;
     let years = 0;
@@ -898,7 +896,9 @@ function Deals() {
           <QuadrantChart2 data={dealsQuadrantData}/>
         </div>
       </div>
-      <Timeline meetingData={meetingData} emailData={emailData}/>
+      <div id="timelineChart">
+        <Timeline meetingData={meetingData} emailData={emailData}/>
+      </div>
     </div>
   )
 }

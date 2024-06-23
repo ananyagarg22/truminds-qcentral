@@ -1,62 +1,51 @@
 import React, { useEffect, useRef } from 'react';
 import Highcharts from 'highcharts';
-
 import HighchartsReact from 'highcharts-react-official';
 import HC_more from "highcharts/highcharts-more"; 
 
+HC_more(Highcharts);
 
 const chartOptions = {
     chart: {
         type: 'bubble',
+        plotBorderWidth: 1,
+        zoomType: 'xy',
+        width: 1200,
     },
     credits: {
         enabled: false,
     },
     legend: {
-        enabled: true,
+        enabled: false,
     },
     title: {
-        text: 'Meetings, Emails, and Participants Over Time',
+        text: 'Meetings and Emails',
     },
     xAxis: {
         type: 'datetime',
         title: {
-        text: 'Week',
+            text: '',
         },
+        tickInterval: 30 * 24 * 3600 * 1000,
+        labels: {
+            formatter: function () {
+                console.log("Hello:")
+                console.log(this.value);
+                return Highcharts.dateFormat('%Y-%m-%d', this.value);
+            }
+        },
+        opposite: true,
     },
     yAxis: {
         title: {
             text: '',
         },
-        plotLines: [{
-            value: 2, // Set the y-axis value for the line
-            color: 'blue', // Match the color of the meetings series
-            width: 2, // Line thickness
-            label: {
-              text: 'Meetings', // Label text
-              align: 'left', // Align the label to the left
-              style: {
-                color: 'blue', // Match the color of the meetings series
-              },
-              x: 10, // Horizontal offset from the y-axis
-              y: -5, // Vertical offset from the y-axis line
-            },
-          },
-          {
-            value: 1, // Set the y-axis value for the line
-            color: 'yellow', // Match the color of the meetings series
-            width: 2, // Line thickness
-            label: {
-              text: 'Emails', // Label text
-              align: 'left', // Align the label to the left
-              style: {
-                color: 'yellow', // Match the color of the meetings series
-              },
-              x: 10, // Horizontal offset from the y-axis
-              y: -5, // Vertical offset from the y-axis line
-            },
-          }],
-          
+        labels: {
+            formatter: function() {
+                return this.value === 2 ? 'Meetings' : this.value === 1? 'Emails': '';
+            }
+        },
+        tickPositions: [0, 1, 2, 3],
     },
     tooltip: {
         pointFormatter: function () {
@@ -67,26 +56,8 @@ const chartOptions = {
         return `Number of ${seriesName}: ${num}`;
         },
     },
-    // series: [
-    //     {
-    //     name: 'Meetings',
-    //     data: formattedMeetingsData,
-    //     color: 'blue',
-    //     },
-    //     {
-    //     name: 'Emails',
-    //     data: formattedEmailsData,
-    //     color: 'green',
-    //     },
-    //   {
-    //     name: 'Participants',
-    //     data: formattedMeetingsData.concat(formattedEmailsData), // Assuming participants data applies to both meetings and emails series
-    //     color: 'purple',
-    //   },
-    // ],
+    series: [],
 };
-
-HC_more(Highcharts);
 
 export const Timeline = ({meetingData,emailData}) => {
 
@@ -95,56 +66,85 @@ export const Timeline = ({meetingData,emailData}) => {
     useEffect( () => {
         if(chartRef.current){
             const mychart = chartRef.current.chart;
-
-            const formattedMeetingsData = meetingData.searchResults[0].entities.map((meeting) => {
-                meeting = meeting.data;
-                const meetingDate = new Date(meeting.startDate);
+            let meetingsCount = {};
+            meetingData.searchResults[0].entities.map((meeting) => {
+                let meetingdata = meeting.data[0];
+                const meetingDate = new Date(meetingdata.startDate);
                 const month = meetingDate.getMonth();
                 const year = meetingDate.getFullYear();
                 meetingDate.setDate(new Date(year, month + 1, 0).getDate());
-                meetingDate.setHours(23, 59, 59, 999);
-                const formattedDate = meetingDate.toLocaleDateString();
-            
-                return {
-                    x: formattedDate,
-                    y: 2,
-                    z: meeting.meetings,
-                };
+                meetingDate.setHours(0, 0, 0, 0);
+                const formattedDate = meetingDate.getTime();
+                // return {
+                    //     x: formattedDate,
+                    //     y: 2,
+                    //     z: meeting.meetings,
+                // };
+                if (meetingsCount[formattedDate]) {
+                    meetingsCount[formattedDate]++;
+                } else {
+                    meetingsCount[formattedDate] = 1;
+                }
             });
-            
-            const formattedEmailsData = emailData.map((email) => {
+            const formattedMeetingsData = [];
+            for (let lastDay in meetingsCount) {
+                formattedMeetingsData.push({
+                    x: parseInt(lastDay, 10),
+                    y: 2,
+                    z: meetingsCount[lastDay]
+                });
+            }
+            // console.log(meetingsCount);
+            console.log(formattedMeetingsData);
+            // formattedMeetingsData = meetingsCount.map()
+            let emailsCount = {};
+            emailData.map((email) => {
                 const emailDate = new Date(email.sendDatetime);
                 const month = emailDate.getMonth();
                 const year = emailDate.getFullYear();
                 emailDate.setDate(new Date(year, month + 1, 0).getDate());
-                emailDate.setHours(23, 59, 59, 999);
-                const formattedDate = emailDate.toLocaleDateString();
-            
-                return {
-                    x: formattedDate,
-                    y: 1, // Assuming participants data applies to both meetings and emails series
-                    z: email.emails,
-                };
+                emailDate.setHours(0, 0, 0, 0);
+                const formattedDate = emailDate.getTime();
+                if (emailsCount[formattedDate]) {
+                    emailsCount[formattedDate] ++;
+                } else {
+                    emailsCount[formattedDate] = 1
+                }
+                // return {
+                //     x: formattedDate,
+                //     y: 1,
+                //     z: email.emails,
+                // };
             });
-            
-
+            const formattedEmailsData = [];
+            for (let lastDay in emailsCount) {
+                formattedEmailsData.push({
+                    x: parseInt(lastDay, 10),
+                    y: 1,
+                    z: emailsCount[lastDay]
+                });
+            }
+            // console.log(emailsCount);
+            console.log(formattedEmailsData);
             mychart.update({
                 series: [
                     {
-                    name: 'Meetings',
-                    data: formattedMeetingsData,
-                    color: 'blue',
+                        name: 'Meetings',
+                        type: 'bubble',
+                        data: formattedMeetingsData,
+                        color: 'blue',
                     },
                     {
-                    name: 'Emails',
-                    data: formattedEmailsData,
-                    color: 'green',
+                        name: 'Emails',
+                        type: 'bubble',
+                        data: formattedEmailsData,
+                        color: 'green',
                     },
                 ]
-            })
+            }, true, true);
         }
         
-    } ,[meetingData,emailData])
+    } ,[meetingData,emailData]);
 
     
 
