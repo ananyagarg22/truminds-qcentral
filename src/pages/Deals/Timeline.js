@@ -11,6 +11,9 @@ const chartOptions = {
         plotBorderWidth: 1,
         zoomType: 'xy',
         width: 1200,
+        // backgroundColor: 'rbg(255,255,255)',
+        plotBackgroundColor: 'rgb(204,224,247)',
+        plotBorderColor: 'rgb(255, 255, 255)'
     },
     credits: {
         enabled: false,
@@ -24,7 +27,15 @@ const chartOptions = {
     xAxis: {
         type: 'datetime',
         title: {
-            text: '',
+            text: 'Month of',
+            align: 'left',
+            x: 10,
+            y: 25,
+            style: {
+                fontWeight: 'bold',
+                fontSize: '16px',
+                color: '#000000', // Change the color of the subtitle text
+            },
         },
         tickInterval: 30 * 24 * 3600 * 1000,
         labels: {
@@ -32,8 +43,13 @@ const chartOptions = {
                 console.log("Hello:")
                 console.log(this.value);
                 return Highcharts.dateFormat('%Y-%m-%d', this.value);
+            },
+            style: {
+                color: 'rgb(139, 139, 160)'
             }
         },
+        lineWidth: 0,
+        tickLength: 0,
         opposite: true,
     },
     yAxis: {
@@ -43,7 +59,8 @@ const chartOptions = {
         labels: {
             formatter: function() {
                 return this.value === 2 ? 'Meetings' : this.value === 1? 'Emails': '';
-            }
+            },
+            x: -100,
         },
         tickPositions: [0, 1, 2, 3],
     },
@@ -132,13 +149,17 @@ export const Timeline = ({meetingData,emailData}) => {
                         name: 'Meetings',
                         type: 'bubble',
                         data: formattedMeetingsData,
-                        color: 'blue',
+                        color: 'orange',
+                        borderColor: 'white',
+                        borderWidth: 5,
                     },
                     {
                         name: 'Emails',
                         type: 'bubble',
                         data: formattedEmailsData,
-                        color: 'green',
+                        color: 'blue',
+                        borderColor: 'white',
+                        borderWidth: 5,
                     },
                 ]
             }, true, true);
