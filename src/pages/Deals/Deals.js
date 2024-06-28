@@ -6,9 +6,7 @@ import HC_more from "highcharts/highcharts-more";
 import { dealsQuadrantData } from './dealsQuadrantData';
 import { dealsLineData } from './dealsLineData';
 import {Timeline} from './Timeline';
-
-import {meetingData} from './meetingdata.js';
-import {emailData} from './emaildata.js';
+import {timelineData} from './timelineData.js';
 
 HC_more(Highcharts);
 
@@ -867,6 +865,7 @@ const LineChart = ({ data }) => {
 };
 
 function Deals() {
+
   return (
     <div id="dealspage">
       <div id='title'>
@@ -897,7 +896,7 @@ function Deals() {
         </div>
       </div>
       <div id="timelineChart">
-        <Timeline meetingData={meetingData} emailData={emailData}/>
+        <Timeline timelineData={timelineData}/>
       </div>
     </div>
   )

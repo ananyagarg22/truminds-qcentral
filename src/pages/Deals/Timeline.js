@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import Highcharts from 'highcharts';
 import HighchartsReact from 'highcharts-react-official';
 import HC_more from "highcharts/highcharts-more"; 
@@ -12,7 +12,7 @@ const chartOptions = {
         zoomType: 'xy',
         width: 1200,
         // backgroundColor: 'rbg(255,255,255)',
-        plotBackgroundColor: 'rgb(204,224,247)',
+        plotBackgroundColor: 'rgb(231,222,255)',
         plotBorderColor: 'rgb(255, 255, 255)'
     },
     credits: {
@@ -27,21 +27,19 @@ const chartOptions = {
     xAxis: {
         type: 'datetime',
         title: {
-            text: 'Month of',
+            text: ' Week of',
             align: 'left',
             x: 10,
             y: 25,
             style: {
                 fontWeight: 'bold',
-                fontSize: '16px',
+                fontSize: '12px',
                 color: '#000000', // Change the color of the subtitle text
             },
         },
         tickInterval: 30 * 24 * 3600 * 1000,
         labels: {
             formatter: function () {
-                console.log("Hello:")
-                console.log(this.value);
                 return Highcharts.dateFormat('%Y-%m-%d', this.value);
             },
             style: {
@@ -58,11 +56,11 @@ const chartOptions = {
         },
         labels: {
             formatter: function() {
-                return this.value === 2 ? 'Meetings' : this.value === 1? 'Emails': '';
+                return this.value === 1 ? 'Meetings' : this.value === 0? 'Emails': '';
             },
-            x: -100,
+            x: -50,
         },
-        tickPositions: [0, 1, 2, 3],
+        // tickPositions: [-1, 0, 1, 2, 3],
     },
     tooltip: {
         pointFormatter: function () {
@@ -76,98 +74,177 @@ const chartOptions = {
     series: [],
 };
 
-export const Timeline = ({meetingData,emailData}) => {
+export const Timeline = ({timelineData}) => {
 
     const chartRef = useRef(null);
+    const [showParticipants, setShowParticipants] = useState(false);
 
     useEffect( () => {
         if(chartRef.current){
             const mychart = chartRef.current.chart;
+
+            // Meetings Data
             let meetingsCount = {};
-            meetingData.searchResults[0].entities.map((meeting) => {
-                let meetingdata = meeting.data[0];
-                const meetingDate = new Date(meetingdata.startDate);
-                const month = meetingDate.getMonth();
-                const year = meetingDate.getFullYear();
-                meetingDate.setDate(new Date(year, month + 1, 0).getDate());
-                meetingDate.setHours(0, 0, 0, 0);
-                const formattedDate = meetingDate.getTime();
-                // return {
-                    //     x: formattedDate,
-                    //     y: 2,
-                    //     z: meeting.meetings,
-                // };
-                if (meetingsCount[formattedDate]) {
-                    meetingsCount[formattedDate]++;
-                } else {
-                    meetingsCount[formattedDate] = 1;
-                }
+            timelineData.contacts.map((contact) => {
+                contact.conversation.data.forEach((eachData) => {
+                    const meetingsDate = new Date(eachData.endDate);
+                    const formattedDate = meetingsDate.getTime();
+                    let count = 0;
+                    for(let i in eachData.convIds) {
+                        count += eachData.convIds[i].length;
+                    }
+                    if(count > 0) {
+                        if (meetingsCount[formattedDate]) {
+                            meetingsCount[formattedDate] += count;
+                        } else {
+                            meetingsCount[formattedDate] = count;
+                        }
+                    }
+                });
             });
-            const formattedMeetingsData = [];
+            let formattedMeetingsData = [];
             for (let lastDay in meetingsCount) {
                 formattedMeetingsData.push({
                     x: parseInt(lastDay, 10),
-                    y: 2,
+                    y: 1,
                     z: meetingsCount[lastDay]
                 });
             }
             // console.log(meetingsCount);
-            console.log(formattedMeetingsData);
-            // formattedMeetingsData = meetingsCount.map()
+            // console.log(formattedMeetingsData);
+
+            // Emails Data
             let emailsCount = {};
-            emailData.map((email) => {
-                const emailDate = new Date(email.sendDatetime);
-                const month = emailDate.getMonth();
-                const year = emailDate.getFullYear();
-                emailDate.setDate(new Date(year, month + 1, 0).getDate());
-                emailDate.setHours(0, 0, 0, 0);
-                const formattedDate = emailDate.getTime();
-                if (emailsCount[formattedDate]) {
-                    emailsCount[formattedDate] ++;
-                } else {
-                    emailsCount[formattedDate] = 1
-                }
-                // return {
-                //     x: formattedDate,
-                //     y: 1,
-                //     z: email.emails,
-                // };
+            timelineData.contacts.map((contact) => {
+                contact.conversation.data.forEach((eachData) => {
+                    const emailsDate = new Date(eachData.endDate);
+                    const formattedDate = emailsDate.getTime();
+                    if(eachData.emails) {
+                        if (emailsCount[formattedDate]) {
+                            emailsCount[formattedDate] += eachData.emails;
+                        } else {
+                            emailsCount[formattedDate] = eachData.emails;
+                        }
+                    }
+                });
             });
-            const formattedEmailsData = [];
+            let formattedEmailsData = [];
             for (let lastDay in emailsCount) {
                 formattedEmailsData.push({
                     x: parseInt(lastDay, 10),
-                    y: 1,
+                    y: 0,
                     z: emailsCount[lastDay]
                 });
             }
             // console.log(emailsCount);
-            console.log(formattedEmailsData);
+            // console.log(formattedEmailsData);
+
+            let graphData = [];
+            graphData.push({
+                name: 'Meetings',
+                type: 'bubble',
+                data: formattedMeetingsData,
+                color: 'rgb(242,167,30)',
+                borderColor: 'white',
+                borderWidth: 5,
+            });
+            graphData.push({
+                name: 'Emails',
+                type: 'bubble',
+                data: formattedEmailsData,
+                color: 'rgb(77,161,255)',
+                borderColor: 'white',
+                borderWidth: 5,
+            });
+            
+            // Individual Participants Data
+            let i = 1;
+            let yAxisLabels = ['Meetings', 'Emails'];
+            timelineData.contacts.map((contact) => {
+                formattedEmailsData = [];
+                formattedMeetingsData = [];
+                meetingsCount = {};
+                emailsCount = {};
+                const participantName = contact.name;
+                yAxisLabels.push(participantName);
+                contact.conversation.data.forEach((eachData) => {
+                    const meetingsDate = new Date(eachData.endDate);
+                    const formattedDate = meetingsDate.getTime();
+                    let count = 0;
+                    for(let i in eachData.convIds) {
+                        count += eachData.convIds[i].length;
+                    }
+                    if(count > 0) {
+                        if (meetingsCount[formattedDate]) {
+                            meetingsCount[formattedDate] += count;
+                        } else {
+                            meetingsCount[formattedDate] = count;
+                        }
+                    }
+                    if(eachData.emails) {
+                        if (emailsCount[formattedDate]) {
+                            emailsCount[formattedDate] += eachData.emails;
+                        } else {
+                            emailsCount[formattedDate] = eachData.emails;
+                        }
+                    }
+                });
+                for (let lastDay in meetingsCount) {
+                    formattedMeetingsData.push({
+                        x: parseInt(lastDay, 10),
+                        y: -i,
+                        z: meetingsCount[lastDay]
+                    });
+                }
+                for (let lastDay in emailsCount) {
+                    formattedEmailsData.push({
+                        x: parseInt(lastDay, 10),
+                        y: -i,
+                        z: emailsCount[lastDay]
+                    });
+                }
+                graphData.push({
+                    name: 'Meetings',
+                    type: 'bubble',
+                    data: showParticipants? formattedMeetingsData: [],
+                    color: 'rgb(242,167,30)',
+                    borderColor: 'white',
+                    borderWidth: 5,
+                });
+                graphData.push({
+                    name: 'Emails',
+                    type: 'bubble',
+                    data: showParticipants? formattedEmailsData: [],
+                    color: 'rgb(77,161,255)',
+                    borderColor: 'white',
+                    borderWidth: 5,
+                });
+                i++;
+            });
+            console.log(yAxisLabels);
             mychart.update({
-                series: [
-                    {
-                        name: 'Meetings',
-                        type: 'bubble',
-                        data: formattedMeetingsData,
-                        color: 'orange',
-                        borderColor: 'white',
-                        borderWidth: 5,
+                series: graphData,
+                yAxis: {
+                    labels: {
+                        formatter: function() {
+                            let label = '';
+                            if(this.value === 0 && this.value === 1)
+                                label = yAxisLabels[this.value]; 
+                            else {
+                                label = yAxisLabels[(-this.value)+1];
+                            }
+                            return label;
+                        },
                     },
-                    {
-                        name: 'Emails',
-                        type: 'bubble',
-                        data: formattedEmailsData,
-                        color: 'blue',
-                        borderColor: 'white',
-                        borderWidth: 5,
-                    },
-                ]
+                },
             }, true, true);
         }
         
-    } ,[meetingData,emailData]);
+    } ,[timelineData, showParticipants]);
 
-    
+    function toggleParticipants() {
+        setShowParticipants(!showParticipants);
+    }
 
     return (
         <div>
@@ -176,6 +253,7 @@ export const Timeline = ({meetingData,emailData}) => {
               options={chartOptions}
               ref={chartRef}
               />
+            <button onClick={toggleParticipants}>Toggle Participants</button>
         </div>
     )
 }
