@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import Highcharts from 'highcharts';
 import HighchartsReact from 'highcharts-react-official';
 import HC_more from "highcharts/highcharts-more"; 
+import close from '../../assets/close.png';
 
 HC_more(Highcharts);
 
@@ -22,18 +23,18 @@ const chartOptions = {
         enabled: false,
     },
     title: {
-        text: 'Meetings and Emails',
+        text: 'TimeLine Chart',
     },
     xAxis: {
         type: 'datetime',
         title: {
-            text: ' Week of',
-            align: 'left',
-            x: 10,
-            y: 25,
+            text: 'Week of',
+            align: 'low',
+            offset: 17,
+            x: -100,
             style: {
                 fontWeight: 'bold',
-                fontSize: '12px',
+                fontSize: '14px',
                 color: '#000000', // Change the color of the subtitle text
             },
         },
@@ -62,13 +63,36 @@ const chartOptions = {
         },
         // tickPositions: [-1, 0, 1, 2, 3],
     },
+    plotOptions: {
+        bubble: {
+            minSize: 12,
+            maxSize: 48,
+            cursor: 'pointer',
+            states: {
+                hover: {
+                    enabled: false, // Disable the hover effect
+                },
+                inactive: {
+                    enabled: false, // Disable the inactive (transparent) state
+                },
+            },
+        },
+        series: {
+            marker: {
+                fillColor: null,  // to make it inherit from series
+                lineWidth: 1.2,
+                lineColor: 'white'
+            },
+        },
+    },
     tooltip: {
-        pointFormatter: function () {
-        const seriesName = this.series.name;
-        // const date = new Date(this.x).toLocaleDateString();
-        // const value = this.y;
-        const num = this.z;
-        return `Number of ${seriesName}: ${num}`;
+        useHTML: true,
+        backgroundColor: 'rgba(255, 255, 255, 0)',
+        formatter: function() {
+            const bubbleColor = this.point.color || this.series.color;
+            return `<div style="background-color:${bubbleColor}; padding:3px; border-radius:5px; color:white; font-size: 11px;">
+                        Number of ${this.series.name}: ${this.point.z}
+                    </div>`;
         },
     },
     series: [],
@@ -141,6 +165,7 @@ export const Timeline = ({timelineData}) => {
 
             let graphData = [];
             graphData.push({
+                useHTML: true,
                 name: 'Meetings',
                 type: 'bubble',
                 data: formattedMeetingsData,
