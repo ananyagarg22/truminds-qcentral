@@ -1,10 +1,11 @@
 import React, { useEffect, useRef, useState } from 'react';
 import Highcharts from 'highcharts';
 import HighchartsReact from 'highcharts-react-official';
-import HC_more from "highcharts/highcharts-more"; 
-import close from '../../assets/close.png';
+import HC_more from "highcharts/highcharts-more";
 
 HC_more(Highcharts);
+
+let yAxisLabels = ['Meetings', 'Emails'];
 
 const chartOptions = {
     chart: {
@@ -12,7 +13,6 @@ const chartOptions = {
         plotBorderWidth: 1,
         zoomType: 'xy',
         width: 1200,
-        // backgroundColor: 'rbg(255,255,255)',
         plotBackgroundColor: 'rgb(231,222,255)',
         plotBorderColor: 'rgb(255, 255, 255)'
     },
@@ -27,17 +27,17 @@ const chartOptions = {
     },
     xAxis: {
         type: 'datetime',
-        title: {
-            text: 'Week of',
-            align: 'low',
-            offset: 17,
-            x: -100,
-            style: {
-                fontWeight: 'bold',
-                fontSize: '14px',
-                color: '#000000', // Change the color of the subtitle text
-            },
-        },
+        // title: {
+        //     text: 'Week of',
+        //     align: 'low',
+        //     offset: 17,
+        //     x: -100,
+        //     style: {
+        //         fontWeight: 'bold',
+        //         fontSize: '14px',
+        //         color: '#000000', // Change the color of the subtitle text
+        //     },
+        // },
         tickInterval: 30 * 24 * 3600 * 1000,
         labels: {
             formatter: function () {
@@ -56,11 +56,13 @@ const chartOptions = {
             text: '',
         },
         labels: {
-            formatter: function() {
-                return this.value === 1 ? 'Meetings' : this.value === 0? 'Emails': '';
-            },
-            x: -50,
+            // formatter: function() {
+            //     return this.value === 1 ? 'Meetings' : this.value === 0? 'Emails': '';
+            // },
+            // x: -50,
+            enabled: false,
         },
+        // tickInterval: 1,
         // tickPositions: [-1, 0, 1, 2, 3],
     },
     plotOptions: {
@@ -181,17 +183,22 @@ export const Timeline = ({timelineData}) => {
                 borderColor: 'white',
                 borderWidth: 5,
             });
+            graphData.push ({
+                name:'',
+                type:'bubble',
+                data: [],
+            })
             
             // Individual Participants Data
-            let i = 1;
-            let yAxisLabels = ['Meetings', 'Emails'];
+            let i = 2;
             timelineData.contacts.map((contact) => {
                 formattedEmailsData = [];
                 formattedMeetingsData = [];
                 meetingsCount = {};
                 emailsCount = {};
                 const participantName = contact.name;
-                yAxisLabels.push(participantName);
+                if (!yAxisLabels.includes(participantName))
+                    yAxisLabels.push(participantName);
                 contact.conversation.data.forEach((eachData) => {
                     const meetingsDate = new Date(eachData.endDate);
                     const formattedDate = meetingsDate.getTime();
@@ -246,39 +253,67 @@ export const Timeline = ({timelineData}) => {
                 });
                 i++;
             });
-            console.log(yAxisLabels);
+            // console.log(yAxisLabels);
             mychart.update({
                 series: graphData,
-                yAxis: {
-                    labels: {
-                        formatter: function() {
-                            let label = '';
-                            if(this.value === 0 && this.value === 1)
-                                label = yAxisLabels[this.value]; 
-                            else {
-                                label = yAxisLabels[(-this.value)+1];
-                            }
-                            return label;
-                        },
-                    },
-                },
+                // yAxis: {
+                //     labels: {
+                //         formatter: function() {
+                //             let label = '';
+                //             if(this.value === 0 && this.value === 1)
+                //                 label = yAxisLabels[this.value]; 
+                //             else {
+                //                 label = yAxisLabels[(-this.value)+1];
+                //             }
+                //             return label;
+                //         },
+                //     },
+                // },
             }, true, true);
         }
         
     } ,[timelineData, showParticipants]);
 
     function toggleParticipants() {
+        if(showParticipants === true) {
+            yAxisLabels = ['Meetings', 'Emails']
+        }
         setShowParticipants(!showParticipants);
     }
 
     return (
         <div>
-            <HighchartsReact
-              highcharts={Highcharts}
-              options={chartOptions}
-              ref={chartRef}
-              />
-            <button onClick={toggleParticipants}>Toggle Participants</button>
+            <div style={{display: 'flex', backgroundColor:'white', paddingLeft: '10px'}}>
+                <div>
+                    <ul style={{listStyle: 'none', height:  '300px', display:"flex", flexDirection:"column", justifyContent:"space-evenly", margin: '0', padding: '0'}}>
+                        <div style={{fontWeight: 'bolder'}}>Week Of</div>
+                        {
+                            yAxisLabels.map((label, index) => {
+                                if(index === 0 || index === 1)
+                                    return (
+                                        <li>{label}</li>
+                                    )
+                            })
+                        }
+                    </ul>
+                    <button onClick={toggleParticipants} style={{border: 'none', backgroundColor: 'transparent', cursor: 'pointer', margin: '0 10px'}}>Participants</button>
+                    {yAxisLabels.length > 2 && <ul style={{listStyle: 'none', height: '200px', display:"flex", flexDirection:"column", justifyContent:"space-evenly",  margin: '0', padding: '0 0 23px 0'}}>
+                        {
+                            yAxisLabels.map((label, index) => {
+                                if(index !== 0 && index !== 1)
+                                    return (
+                                        <li style={{fontSize: '70%'}}>{label}</li>
+                                    )
+                            })
+                        }
+                    </ul>}
+                </div>
+                <HighchartsReact
+                highcharts={Highcharts}
+                options={chartOptions}
+                ref={chartRef}
+                />
+            </div>
         </div>
     )
 }
