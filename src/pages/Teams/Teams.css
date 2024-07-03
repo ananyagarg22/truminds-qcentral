@@ -1,0 +1,16 @@
+table {
+    width: 98%;
+    border-collapse: collapse;
+}
+
+#table {
+    margin: 1%;
+}
+
+td, th {
+    border: 1px solid grey;
+}
+
+#userName {
+    font-size: 13px;
+}
