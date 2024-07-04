@@ -1,11 +1,27 @@
 import './Teams.css';
-import React,{ useState, useEffect } from 'react';
+import React,{ useState, useEffect, useReducer } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import { teamsData } from './teamsData.js';
+
+// function dummyDataReducer (state, action) {
+//     if (action.type === 'UPDATE') {
+//         return action.payload;
+//     }
+
+//     if (action.type === 'DELETE') {
+//         return [];
+//     }
+// }
 
 function Teams() {
 
-    const [records,setRecords] = useState([])
+    // const [records,setRecords] = useState([])
     const [dummyApiData, setDummyApiData] = useState([])
+
+    const dummyData = useSelector(state => state.table2Data);
+    const dispatch = useDispatch();
+
+    // const [dummyDataState, dummyDataDispatch] = useReducer(dummyDataReducer, []);
 
     useEffect(() => {
         fetch('https://jsonplaceholder.typicode.com/users')
@@ -15,7 +31,8 @@ function Teams() {
     },[])
 
     useEffect(() => {
-        teamsDataCalculation();
+        const tableData = teamsDataCalculation();
+        updateTableData(tableData);
     },[])
 
     function teamsDataCalculation() {
@@ -36,18 +53,8 @@ function Teams() {
                 'sellerEQ': 0
             })
         })
-        // console.log(tableData);
         activeOppties.forEach((oppty) => {
             const opptyId = oppty.id;
-            // console.log('Looping thru activeOppties');
-            // const requiredUserId = userStats.map((user,index) => {
-            //     const userId = user.userId;
-            //     if( opptyId in user) {
-            //         if(opptyId === user.opptyId) {
-            //             return(userId);
-            //         }
-            //     }        
-            // })
             let requiredUserId = 0;
             for(let userIndex in userStats) {
                 const user = userStats[userIndex];
@@ -59,14 +66,6 @@ function Teams() {
                     }
                 }
             }
-            // console.log('yayayaay userId found!:' + requiredUserId);
-            // const userData = users.map((user,index) => {
-            //     const userId = user.id;
-            //     if( userId === requiredUserId){
-            //         noOfDeals ++;
-            //         return(user);
-            //     }
-            // })
             tableData.forEach((user) => {
                 if (requiredUserId === user.id){
                     user.noOfDeals ++;
@@ -74,9 +73,37 @@ function Teams() {
                 }
             })
         });
-        setRecords(tableData);
-        console.log(tableData);
+        // setRecords(tableData);
+        return tableData;
     }
+
+    function updateTableData(tableData) {
+        // dummyDataDispatch({
+        //     type: 'UPDATE_TABLE2',
+        //     payload: tableData
+        // });
+        console.log("Dispatching the action to update the Table 2");
+        dispatch({
+            type: 'UPDATE_TABLE2',
+            payload: tableData
+        });
+    }
+
+    function deleteTableData() {
+        // dummyDataDispatch({
+        //     type: 'DELETE_TABLE2'
+        // });
+        console.log("Dispatching the action to delete the data of Table 2");
+        dispatch({
+            type: 'DELETE_TABLE2'
+        });
+    }
+
+    function repopulateData() {
+        const tableData = teamsDataCalculation();
+        updateTableData(tableData);
+    }
+
     return (
         <div>
             <h3 id="table_heading">Using data fetched in real time from a Dummy API</h3>
@@ -115,7 +142,10 @@ function Teams() {
             </table>
             <br></br>
             <h3 id="table_heading">Using hard coded data from the actual website:</h3> 
-            <br></br>
+            <div style={{display: 'flex', justifyContent: 'space-evenly', paddingBottom: '1%'}}>
+                <button onClick={repopulateData}>REPOPULATE THE TABLE</button>
+                <button onClick={deleteTableData}>DELETE THE CONTENTS</button>
+            </div>
             <table id='table2'>
                 <tr>
                     <th>Team Member</th>
@@ -126,7 +156,7 @@ function Teams() {
                     <th>MEDDIC</th>
                     <th>Seller EQ</th>
                 </tr>
-                {records.map((list, index) => {
+                {dummyData.map((list, index) => {
                 return (
                 <tr key={index}>   
                     <td id="userName">
