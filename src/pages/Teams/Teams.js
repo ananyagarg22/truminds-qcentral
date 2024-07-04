@@ -5,19 +5,18 @@ import { teamsData } from './teamsData.js';
 function Teams() {
 
     const [records,setRecords] = useState([])
+    const [dummyApiData, setDummyApiData] = useState([])
 
-//     useEffect(() => {
-//         console.log('inside Use Effect');
-//         fetch('https://sunstone-app-dev-devenv02.dev.uniphorecloud.com/usales/teams/summary')
-//         .then(response => response.json())
-//         .then(data => setRecords(data))
-//         // .catch(err => console.log(err))
-//     },[])
-//     console.log(records);
+    useEffect(() => {
+        fetch('https://jsonplaceholder.typicode.com/users')
+        .then(response => response.json())
+        .then(data => setDummyApiData(data))
+        .catch(err => console.log(err))
+    },[])
 
-        useEffect(() => {
-            teamsDataCalculation();
-        },[])
+    useEffect(() => {
+        teamsDataCalculation();
+    },[])
 
     function teamsDataCalculation() {
 
@@ -26,14 +25,13 @@ function Teams() {
         const users = teamsData?.users;
 
         let tableData = users.map((user) => { 
-            
             return({
                 'id':user.id,
                 'teamMember': user.fullname,
                 'noOfDeals': 0,
                 'dealValue': 0,
-                'customerSentiment': 0,
-                'customerEngagement': 0,
+                'customerSentiment': user.customerSentiment,
+                'customerEngagement': user.customerEngagement,
                 'meddic': 0,
                 'sellerEQ': 0
             })
@@ -81,7 +79,44 @@ function Teams() {
     }
     return (
         <div>
-            <table id='table'>
+            <h3 id="table_heading">Using data fetched in real time from a Dummy API</h3>
+            <table id='table1'>
+                <tr>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Phone</th>
+                    <th>City</th>
+                    <th>Zipcode</th>
+                    <th>Company Name</th>
+                </tr>
+                {dummyApiData.map((list, index) => {
+                return (
+                <tr key={index}>   
+                    <td id="userName">
+                        {list.name}
+                    </td>
+                    <td id='userEmail'>
+                        {list.email}
+                    </td>
+                    <td id='userPhone'>
+                        {list.phone}
+                    </td>
+                    <td id='userCity'>
+                        {list.address.city}
+                    </td>
+                    <td id='userZipCode'>
+                        {list.address.zipcode}
+                    </td>
+                    <td id='userCompany'>
+                        {list.company.name}
+                    </td>
+                </tr>)
+                })}
+            </table>
+            <br></br>
+            <h3 id="table_heading">Using hard coded data from the actual website:</h3> 
+            <br></br>
+            <table id='table2'>
                 <tr>
                     <th>Team Member</th>
                     <th>Total Deals</th>
@@ -102,6 +137,12 @@ function Teams() {
                     </td>
                     <td id='DealValue'>
                         {list.dealValue}
+                    </td>
+                    <td id='userSentiment'>
+                        {list.customerSentiment}
+                    </td>
+                    <td id='userEngagement'>
+                        {list.customerEngagement}
                     </td>
                 </tr>)
                 })}

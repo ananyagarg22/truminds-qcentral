@@ -1,9 +1,13 @@
-table {
+#table1, #table2 {
     width: 98%;
     border-collapse: collapse;
 }
 
-#table {
+#table_heading {
+    padding: 1%;
+}
+
+#table1, #table2 {
     margin: 1%;
 }
 
