@@ -110,77 +110,81 @@ function Teams() {
         <div id='navbar-teams'>
             <Navbar/>
             <div id='restofthecontent'>
-                <h3 id="table_heading">Using data fetched in real time from a Dummy API</h3>
-                <table id='table1'>
-                    <tr>
-                        <th>Name</th>
-                        <th>Email</th>
-                        <th>Phone</th>
-                        <th>City</th>
-                        <th>Zipcode</th>
-                        <th>Company Name</th>
-                    </tr>
-                    {dummyApiData.map((list, index) => {
-                    return (
-                    <tr key={index}>   
-                        <td id="userName">
-                            {list.name}
-                        </td>
-                        <td id='userEmail'>
-                            {list.email}
-                        </td>
-                        <td id='userPhone'>
-                            {list.phone}
-                        </td>
-                        <td id='userCity'>
-                            {list.address.city}
-                        </td>
-                        <td id='userZipCode'>
-                            {list.address.zipcode}
-                        </td>
-                        <td id='userCompany'>
-                            {list.company.name}
-                        </td>
-                    </tr>)
-                    })}
-                </table>
-                <br></br>
-                <h3 id="table_heading">Using hard coded data from the actual website:</h3> 
-                <div style={{display: 'flex', justifyContent: 'space-evenly', paddingBottom: '1%'}}>
-                    <button onClick={repopulateData}>REPOPULATE THE TABLE</button>
-                    <button onClick={deleteTableData}>DELETE THE CONTENTS</button>
+                <div id="table1">
+                    <h3 id="table_heading">Using data fetched in real time from a Dummy API</h3>
+                    <table>
+                        <tr>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Phone</th>
+                            <th>City</th>
+                            <th>Zipcode</th>
+                            <th>Company Name</th>
+                        </tr>
+                        {dummyApiData.map((list, index) => {
+                        return (
+                        <tr key={index}>   
+                            <td id="userName">
+                                {list.name}
+                            </td>
+                            <td id='userEmail'>
+                                {list.email}
+                            </td>
+                            <td id='userPhone'>
+                                {list.phone}
+                            </td>
+                            <td id='userCity'>
+                                {list.address.city}
+                            </td>
+                            <td id='userZipCode'>
+                                {list.address.zipcode}
+                            </td>
+                            <td id='userCompany'>
+                                {list.company.name}
+                            </td>
+                        </tr>)
+                        })}
+                    </table>
                 </div>
-                <table id='table2'>
-                    <tr>
-                        <th>Team Member</th>
-                        <th>Total Deals</th>
-                        <th>Deal Value</th>
-                        <th>Customer Sentiment</th>
-                        <th>Customer Engagement</th>
-                        <th>MEDDIC</th>
-                        <th>Seller EQ</th>
-                    </tr>
-                    {dummyData.map((list, index) => {
-                    return (
-                    <tr key={index}>   
-                        <td id="userName">
-                            {list.teamMember}
-                        </td>
-                        <td id='TotalDeals'>
-                            {list.noOfDeals}
-                        </td>
-                        <td id='DealValue'>
-                            {list.dealValue}
-                        </td>
-                        <td id='userSentiment'>
-                            {list.customerSentiment}
-                        </td>
-                        <td id='userEngagement'>
-                            {list.customerEngagement}
-                        </td>
-                    </tr>)
-                    })}
-                </table>
+                <br></br>
+                <div id="table2">
+                    <h3 id="table_heading">Using hard coded data from the actual website:</h3> 
+                    <div style={{display: 'flex', justifyContent: 'space-evenly', paddingBottom: '1%'}}>
+                        <button onClick={repopulateData}>REPOPULATE THE TABLE</button>
+                        <button onClick={deleteTableData}>DELETE THE CONTENTS</button>
+                    </div>
+                    <table>
+                        <tr>
+                            <th>Team Member</th>
+                            <th>Total Deals</th>
+                            <th>Deal Value</th>
+                            <th>Customer Sentiment</th>
+                            <th>Customer Engagement</th>
+                            <th>MEDDIC</th>
+                            <th>Seller EQ</th>
+                        </tr>
+                        {dummyData.map((list, index) => {
+                        return (
+                        <tr key={index}>   
+                            <td id="userName">
+                                {list.teamMember}
+                            </td>
+                            <td id='TotalDeals'>
+                                {list.noOfDeals}
+                            </td>
+                            <td id='DealValue'>
+                                {list.dealValue}
+                            </td>
+                            <td id='userSentiment'>
+                                {list.customerSentiment}
+                            </td>
+                            <td id='userEngagement'>
+                                {list.customerEngagement}
+                            </td>
+                        </tr>)
+                        })}
+                    </table>
+                </div>
             </div>
     </div>
 

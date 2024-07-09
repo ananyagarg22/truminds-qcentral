@@ -1,14 +1,20 @@
 import { createStore } from 'redux';
 
-const dataReducer = (state = { table2Data: [] }, action) => {
+const initialData = {
+    table2Data: []
+}
+
+const dataReducer = (state = initialData, action) => {
     if (action.type === 'UPDATE_TABLE2') {
         return {
+            ...state,
             table2Data: action.payload,
         };
     }
 
     if (action.type === 'DELETE_TABLE2') {
         return {
+            ...state,
             table2Data: [],
         };
     }

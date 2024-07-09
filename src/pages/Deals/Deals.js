@@ -164,8 +164,8 @@ const QuadrantChart = ({data}) => {
     chart: {
         type: 'bubble',
         backgroundColor: 'transparent', 
-        height: 700,
-        width: 500,
+        height: 250,
+        width: 400,
     },
     credits: {
       enabled: false,
