@@ -1,0 +1,23 @@
+#heading{
+    margin: 20px;
+    font-size: 20px;
+}
+
+#headingplusbuttons {
+    background-color: white;
+    padding: 10px;
+    width: 40vw;
+    margin: 15px;
+    margin-top: 100px;
+    /* border-radius: 10px; */
+    font-size: 9px;
+    display: flex;
+    align-items: start;
+    justify-content: space-between;
+}
+#buttons-admin{
+    width: 20vw;
+    display: flex;
+    align-self: center;
+    justify-content: space-between;
+}

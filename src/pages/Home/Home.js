@@ -41,6 +41,15 @@ function Home() {
           Go to Teams Page
         </Link>
       </p>
+      {/* Admin Button */}
+      <p id="admin-button">
+        <Link 
+          to="/admin" 
+          style={{textDecoration: 'none', color: 'white'}}
+        > 
+          Go to Admin Page
+        </Link>
+      </p>
 
       <Dealstatus/>
       <UpcomingMeetings/>
