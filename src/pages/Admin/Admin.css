@@ -21,3 +21,9 @@
     align-self: center;
     justify-content: space-between;
 }
+#admin-page{
+    display: flex;
+}
+#users{
+    padding-left: 7vw;
+}

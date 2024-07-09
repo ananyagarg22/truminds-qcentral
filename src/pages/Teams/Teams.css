@@ -1,10 +1,6 @@
 #table1, #table2 {
-    width: 98%;
+    width: 85vw;
     border-collapse: collapse;
-}
-
-#table_heading {
-    padding: 1%;
 }
 
 #table1, #table2 {
@@ -17,4 +13,10 @@ td, th {
 
 #userName {
     font-size: 13px;
+}
+#navbar-teams{
+    display: flex;
+}
+#restofthecontent{
+    padding-left: 8vw;
 }

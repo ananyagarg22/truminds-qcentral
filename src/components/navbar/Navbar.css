@@ -1,0 +1,22 @@
+#navbar{
+    background-color: rgb(34,39,56);
+    text-align: center;
+    width: 7vw;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    position: fixed;
+  
+  }
+  #navbar img{
+    height: auto;
+    width: 92%;
+  }
+  #navbar p{
+    margin: 0;
+  }
+  #meeting-button,#improve-button,#analytics-button {
+    cursor: not-allowed;
+  }
+  

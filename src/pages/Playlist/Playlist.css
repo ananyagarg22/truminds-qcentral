@@ -12,4 +12,11 @@
     border: none;
     border-radius: 5px;
     cursor: pointer;
+
+}
+#navbar-playlist{
+    display: flex;
+}
+#createplaylistbutton{
+    padding-left: 7vw;
 }

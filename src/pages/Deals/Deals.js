@@ -7,6 +7,7 @@ import { dealsQuadrantData } from './dealsQuadrantData';
 import { dealsLineData } from './dealsLineData';
 import {Timeline} from './Timeline';
 import {timelineData} from './timelineData.js';
+import {Navbar} from '../../components/navbar/Navbar';
 
 HC_more(Highcharts);
 
@@ -231,6 +232,7 @@ const QuadrantChart = ({data}) => {
 
   return (
     <>
+
       <div id="quadrantRow">
         <div id="q1Container">
           <div id="quadrant" style={{backgroundColor: 'rgb(204,224,247)'}}>
@@ -867,6 +869,8 @@ const LineChart = ({ data }) => {
 function Deals() {
 
   return (
+    <div id='navbar-on-deals-page'>
+      <Navbar/>
     <div id="dealspage">
       <div id='title'>
         Deals
@@ -898,6 +902,7 @@ function Deals() {
       <div id="timelineChart">
         <Timeline timelineData={timelineData}/>
       </div>
+    </div>
     </div>
   )
 }

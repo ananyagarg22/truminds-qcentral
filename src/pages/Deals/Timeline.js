@@ -12,7 +12,7 @@ const chartOptions = {
         type: 'bubble',
         plotBorderWidth: 1,
         zoomType: 'xy',
-        width: 1200,
+        width: 1100,
         plotBackgroundColor: 'rgb(231,222,255)',
         plotBorderColor: 'rgb(255, 255, 255)'
     },

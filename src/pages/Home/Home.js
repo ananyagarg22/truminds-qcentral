@@ -1,7 +1,6 @@
 import './Home.css';
 
-import {Link} from 'react-router-dom';
-
+import {Navbar} from '../../components/navbar/Navbar.js';
 import {ActionItemSection} from '../../components/ActionItemSection/ActionsItemSection.js';
 import { LearningProgress } from '../../components/learningProgress/LearningProgress';
 import { EQ } from '../../components/eq/EQ';
@@ -11,52 +10,19 @@ import { UpcomingMeetings } from '../../components/upcomingmeetings/UpcomingMeet
 
 function Home() {
   return (
-    <div className="Home">
-      <QScore/>
-      <EQ/>
-      {/* Create Playlist button */}
-      <p id="create-playlist-button">
-        <Link 
-          to="/playlist" 
-          style={{textDecoration: 'none', color: 'white'}}
-        > 
-          Go to Create Playlist Page
-        </Link>
-      </p>
-      {/* Go to Deals Button */}
-      <p id="deals-button">
-        <Link 
-          to="/deals" 
-          style={{textDecoration: 'none', color: 'white'}}
-        > 
-          Go to Deals Page
-        </Link>
-      </p>
-      {/* Teams Button */}
-      <p id="teams-button">
-        <Link 
-          to="/teams" 
-          style={{textDecoration: 'none', color: 'white'}}
-        > 
-          Go to Teams Page
-        </Link>
-      </p>
-      {/* Admin Button */}
-      <p id="admin-button">
-        <Link 
-          to="/admin" 
-          style={{textDecoration: 'none', color: 'white'}}
-        > 
-          Go to Admin Page
-        </Link>
-      </p>
 
-      <Dealstatus/>
-      <UpcomingMeetings/>
-      <LearningProgress/>
-      <div id='actionitems'><ActionItemSection/></div>
-    </div>
+    <div id='homepage'>
+
+      <Navbar/>
+      <div className="Home">
+        <QScore/>
+        <EQ/>
+        <Dealstatus/>
+        <UpcomingMeetings/>
+        <LearningProgress/>
+        <div id='actionitems'><ActionItemSection/></div>
+      </div>
+    </div>  
   );
 }
-
 export default Home;
