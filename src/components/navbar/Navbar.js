@@ -24,7 +24,7 @@ export function Navbar (){
           </Link>
         </p>
         {/* Meetings */}
-        <p id='meeting-button'><img src={meetingIcon} alt='meeting'></img></p>
+        {/* <p id='meeting-button'><img src={meetingIcon} alt='meeting'></img></p> */}
         {/* Go to Deals Button */}
         <p id="deals-button">
           <Link 
@@ -44,9 +44,9 @@ export function Navbar (){
           </Link>
         </p>
         {/* improve button */}
-        <p id='improve-button'><img src={improveIcon} alt='improve'></img></p>
+        {/* <p id='improve-button'><img src={improveIcon} alt='improve'></img></p> */}
         {/* analytics button */}
-        <p id='analytics-button'><img src={analyticsIcon} alt='analytics'></img></p>  
+        {/* <p id='analytics-button'><img src={analyticsIcon} alt='analytics'></img></p>   */}
         {/* Create Playlist button */}
         <p id="create-playlist-button">
           <Link 
